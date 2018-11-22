@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5476062621A6FAA900F07DC1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5476062521A6FAA900F07DC1 /* main.cpp */; };
+		5476063321A6FD5100F07DC1 /* concurencyTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5476063221A6FD5100F07DC1 /* concurencyTests.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,10 +26,20 @@
 /* Begin PBXFileReference section */
 		5476062221A6FAA900F07DC1 /* concurency */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = concurency; sourceTree = BUILT_PRODUCTS_DIR; };
 		5476062521A6FAA900F07DC1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		5476063021A6FD5100F07DC1 /* concurencyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = concurencyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5476063221A6FD5100F07DC1 /* concurencyTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = concurencyTests.mm; sourceTree = "<group>"; };
+		5476063421A6FD5100F07DC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5476061F21A6FAA900F07DC1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5476062D21A6FD5100F07DC1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				5476062421A6FAA900F07DC1 /* concurency */,
+				5476063121A6FD5100F07DC1 /* concurencyTests */,
 				5476062321A6FAA900F07DC1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				5476062221A6FAA900F07DC1 /* concurency */,
+				5476063021A6FD5100F07DC1 /* concurencyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,6 +73,15 @@
 				5476062521A6FAA900F07DC1 /* main.cpp */,
 			);
 			path = concurency;
+			sourceTree = "<group>";
+		};
+		5476063121A6FD5100F07DC1 /* concurencyTests */ = {
+			isa = PBXGroup;
+			children = (
+				5476063221A6FD5100F07DC1 /* concurencyTests.mm */,
+				5476063421A6FD5100F07DC1 /* Info.plist */,
+			);
+			path = concurencyTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,6 +104,23 @@
 			productReference = 5476062221A6FAA900F07DC1 /* concurency */;
 			productType = "com.apple.product-type.tool";
 		};
+		5476062F21A6FD5100F07DC1 /* concurencyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5476063721A6FD5100F07DC1 /* Build configuration list for PBXNativeTarget "concurencyTests" */;
+			buildPhases = (
+				5476062C21A6FD5100F07DC1 /* Sources */,
+				5476062D21A6FD5100F07DC1 /* Frameworks */,
+				5476062E21A6FD5100F07DC1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = concurencyTests;
+			productName = concurencyTests;
+			productReference = 5476063021A6FD5100F07DC1 /* concurencyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -92,6 +131,9 @@
 				ORGANIZATIONNAME = LVA;
 				TargetAttributes = {
 					5476062121A6FAA900F07DC1 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					5476062F21A6FD5100F07DC1 = {
 						CreatedOnToolsVersion = 10.1;
 					};
 				};
@@ -109,9 +151,20 @@
 			projectRoot = "";
 			targets = (
 				5476062121A6FAA900F07DC1 /* concurency */,
+				5476062F21A6FD5100F07DC1 /* concurencyTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5476062E21A6FD5100F07DC1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5476061E21A6FAA900F07DC1 /* Sources */ = {
@@ -119,6 +172,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5476062621A6FAA900F07DC1 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5476062C21A6FD5100F07DC1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5476063321A6FD5100F07DC1 /* concurencyTests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +315,40 @@
 			};
 			name = Release;
 		};
+		5476063521A6FD5100F07DC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 8M8T7QQG92;
+				INFOPLIST_FILE = concurencyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = lva.com.concurencyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5476063621A6FD5100F07DC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 8M8T7QQG92;
+				INFOPLIST_FILE = concurencyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = lva.com.concurencyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -271,6 +366,15 @@
 			buildConfigurations = (
 				5476062A21A6FAA900F07DC1 /* Debug */,
 				5476062B21A6FAA900F07DC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5476063721A6FD5100F07DC1 /* Build configuration list for PBXNativeTarget "concurencyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5476063521A6FD5100F07DC1 /* Debug */,
+				5476063621A6FD5100F07DC1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
