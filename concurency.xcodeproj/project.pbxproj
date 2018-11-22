@@ -29,6 +29,7 @@
 		5476063021A6FD5100F07DC1 /* concurencyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = concurencyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5476063221A6FD5100F07DC1 /* concurencyTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = concurencyTests.mm; sourceTree = "<group>"; };
 		5476063421A6FD5100F07DC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5476063821A6FDE000F07DC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +53,7 @@
 		5476061921A6FAA900F07DC1 = {
 			isa = PBXGroup;
 			children = (
+				5476063821A6FDE000F07DC1 /* README.md */,
 				5476062421A6FAA900F07DC1 /* concurency */,
 				5476063121A6FD5100F07DC1 /* concurencyTests */,
 				5476062321A6FAA900F07DC1 /* Products */,
