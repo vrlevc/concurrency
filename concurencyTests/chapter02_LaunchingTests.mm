@@ -38,6 +38,19 @@ public:
 	}
 };
 
+/// func
+struct func
+{
+	int& i;
+	func(int& i_):i(i_){}
+	void operator()()
+	{
+		Work work;
+		for (unsigned j=0;j<10;++j)
+			std::cout<<"  >>> do some work: " << j << "\n";
+	}
+};
+
 // MARK: -
 
 @interface chapter02_LaunchingTests : XCTestCase
@@ -56,6 +69,7 @@ public:
 	/// Use function to launch thread:
 	std::thread function_thread(do_some_work);
 	
+	// --- DONE --- //
 	function_thread.join();
 	
 	XCTAssertTrue(work.isDone());
@@ -74,12 +88,48 @@ public:
 	std::thread thread_taskA( ( background_task() ) );
 	std::thread thread_taskB{ background_task() };
 	
-	// waiting other threads
+	// --- DONE --- //
 	thread_task.join();
 	thread_taskA.join();
 	thread_taskB.join();
 	
 	XCTAssertTrue(work.isDone());
+}
+
+- (void)testThreadLambda
+{
+	Work work;
+	XCTAssertFalse(work.isDone());
+	
+	/// Thread by lambda
+	std::thread thread_lambda([]{
+		Work work;
+		std::cout<<"  >>> lambda: do some work from function \n";
+	});
+	
+	// --- DONE --- //
+	thread_lambda.join();
+	
+	XCTAssertTrue(work.isDone());
+}
+
+/// Threads waiting in throw... environment ///
+
+- (void)testWaitingThread
+{
+	int some_local_state = 0;
+	func _function(some_local_state);
+	std::thread t(_function);
+	try
+	{
+		// do thomethig - can throw exception ...
+	}
+	catch(...)
+	{
+		t.join();
+		throw;
+	}
+	t.join();
 }
 
 @end
