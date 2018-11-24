@@ -100,11 +100,11 @@ static void edit_document(std::string const& filename)
 
 // MARK: -
 
-@interface chapter02_LaunchingTests : XCTestCase
+@interface chapter02_1LaunchingTests : XCTestCase
 
 @end
 
-@implementation chapter02_LaunchingTests
+@implementation chapter02_1LaunchingTests
 
 - (void)setUp
 {
