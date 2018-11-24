@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface concurencyTests : XCTestCase
+@interface chapter03_xxxxx : XCTestCase
 
 @end
 
-@implementation concurencyTests
+@implementation chapter03_xxxxx
 
 - (void)setUp {
     // Put setup code here. This method is called before the invocation of each test method in the class.
