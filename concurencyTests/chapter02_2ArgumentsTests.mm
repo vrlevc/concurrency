@@ -1,12 +1,17 @@
 //
-//  chapter02_2ArgumentsTests.m
-//  concurencyTests
-//
 //  Created by lva on 11/24/18.
 //  Copyright © 2018 LVA. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
+
+#include <string>
+#include <thread>
+
+/// Thread function with string arg by reference
+static void f(int i, std::string const& s);
+
+// MARK: -
 
 @interface chapter02_2ArgumentsTests : XCTestCase
 
@@ -14,24 +19,32 @@
 
 @implementation chapter02_2ArgumentsTests
 
-- (void)setUp {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
+// MARK: -
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-}
+- (void)testRefArgument
+{
+    int some_param = 256;
+    
+    char buffer[256]{0};
+    sprintf(buffer, "%i", some_param);
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+    /// thread make a copy of arguments
+    /// thus buffer is a copy of pointer
+    /// to the local buffer
+//  std::thread t(f, 3, buffer);
+    
+    /// Using std::string avoids dangling pointer
+    std::thread t(f, 3, std::string(buffer));
+    
+    // t has a copy of buffer in std::string
+    t.detach();
 }
 
 @end
+
+// MARK: -
+
+static void f(int i, std::string const& s)
+{
+    // access to s paramentr which is ref
+}

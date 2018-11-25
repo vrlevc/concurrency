@@ -79,7 +79,7 @@ static user_command get_user_input();
 static bool done_editing();
 static void process_user_input(user_command const&);
 // thread spawn function - new thred for each document
-static void edit_document(std::string const& filename)
+void edit_document(std::string const& filename)
 {
     open_document_and_disply_gui(filename);
     while (!done_editing())
@@ -162,6 +162,8 @@ static void edit_document(std::string const& filename)
 // Listing 2.2 : Waiting for a thread to finish
 - (void)testWaitingThread
 {
+    static bool rizeException = false;
+    
     try
     {
         int local_state = 0;
@@ -170,7 +172,8 @@ static void edit_document(std::string const& filename)
         try
         {
             // do thomethig - can throw exception ...
-            throw 0;
+            if (rizeException)
+                throw 0;
         }
         catch(...)
         {
@@ -205,3 +208,13 @@ static void edit_document(std::string const& filename)
 }
 
 @end
+
+// MARK: -
+
+// fix warnings:
+static void open_document_and_disply_gui(std::string const&) {}
+static std::string get_file_name_from_user() { return ""; }
+static user_command get_user_input() { return user_command(); }
+static bool done_editing() { return false; }
+static void process_user_input(user_command const&) {}
+
