@@ -35,6 +35,7 @@
 		5476063821A6FDE000F07DC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5492728221A7E1EA00508D5C /* chapter01_HelloTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter01_HelloTests.mm; sourceTree = "<group>"; };
 		5492728421A8071F00508D5C /* chapter02_1LaunchingTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter02_1LaunchingTests.mm; sourceTree = "<group>"; };
+		A954537C21AAA46A001A0514 /* thread_guard.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = thread_guard.hpp; sourceTree = "<group>"; };
 		A964955521A97BA9009E910A /* chapter02_2ArgumentsTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter02_2ArgumentsTests.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				5476062521A6FAA900F07DC1 /* main.cpp */,
+				A954537C21AAA46A001A0514 /* thread_guard.hpp */,
 			);
 			path = concurency;
 			sourceTree = "<group>";

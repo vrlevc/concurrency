@@ -73,6 +73,43 @@ static void process_ref_data(std::string& some_data);
     std::cout << "  >>> data after processing  : " << some_data << std::endl;
 }
 
+-(void)testClassMember
+{
+    /// use oblect's function in thread
+    
+    // class for use in spawned threads
+    class X
+    {
+    public:
+        void do_lengthy_work()
+        {
+            std::cout << "  >>> do_lengthy_work" << std::endl;
+        }
+        void do_lengthy_work_ref(std::string& some_data)
+        {
+            std::cout << "  >>> do_lengthy_work with data ref  : " << some_data << std::endl;
+        }
+        void do_lengthy_work_copy(std::string const& some_data)
+        {
+            std::cout << "  >>> do_lengthy_work with data copy : " << some_data << std::endl;
+        }
+    };
+    
+    // data for thread's functions
+    std::string some_data{"some_data"};
+    X processor;
+    
+    // spawn threads with functions of processor
+    std::thread t1(&X::do_lengthy_work, &processor);
+    std::thread t2(&X::do_lengthy_work_ref, &processor, std::ref(some_data));
+    std::thread t3(&X::do_lengthy_work_copy, &processor, some_data);
+    
+    // gether all process
+    t1.join();
+    t2.join();
+    t3.join();
+}
+
 @end
 
 // MARK: -
