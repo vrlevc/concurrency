@@ -5,11 +5,13 @@
 
 #import <XCTest/XCTest.h>
 
+#include <iostream>
 #include <string>
 #include <thread>
 
 /// Thread function with string arg by reference
 static void f(int i, std::string const& s);
+static void process_copy_data(std::string const& some_data);
 
 // MARK: -
 
@@ -21,7 +23,7 @@ static void f(int i, std::string const& s);
 
 // MARK: -
 
-- (void)testRefArgument
+- (void)testCopyArgumentDetach
 {
     int some_param = 256;
     
@@ -40,6 +42,21 @@ static void f(int i, std::string const& s);
     t.detach();
 }
 
+-(void)testCopyArgument
+{
+    /// thread is going be datached to simulate possible
+    /// data dangling
+    {
+        // prepare local data
+        std::string some_data = "some_data";
+        // thread ctor copies data
+        std::thread t(process_copy_data, some_data);
+        // thread processes copy of data so
+        // can be safaty detached
+        t.detach();
+    }
+}
+
 @end
 
 // MARK: -
@@ -48,3 +65,30 @@ static void f(int i, std::string const& s)
 {
     // access to s paramentr which is ref
 }
+
+static void process_copy_data(std::string const& some_data)
+{
+    // data shoul be copied to been safe usage of it
+    std::cout << "  >>> process_copy_data wit : \"" << some_data << "\"" << std::endl;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
