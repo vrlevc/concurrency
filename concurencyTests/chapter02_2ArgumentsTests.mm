@@ -12,7 +12,7 @@
 /// Thread function with string arg by reference
 static void f(int i, std::string const& s);
 static void process_copy_data(std::string const& some_data);
-
+static void process_ref_data(std::string& some_data);
 // MARK: -
 
 @interface chapter02_2ArgumentsTests : XCTestCase
@@ -44,8 +44,9 @@ static void process_copy_data(std::string const& some_data);
 
 -(void)testCopyArgument
 {
-    /// thread is going be datached to simulate possible
-    /// data dangling
+    /// - thread is going be datached to
+    /// - simulate possible data dangling
+    /// - use arguments copy threads's ability
     {
         // prepare local data
         std::string some_data = "some_data";
@@ -55,6 +56,21 @@ static void process_copy_data(std::string const& some_data);
         // can be safaty detached
         t.detach();
     }
+}
+
+-(void)testRefArgument
+{
+    /// use ste::ref to wrap data for thread
+    
+    // data for use in thread function
+    std::string some_data = "some_data";
+    std::cout << "  >>> data before processing : " << some_data << std::endl;
+    // spawn thread with data for processing
+    std::thread t(process_ref_data, std::ref(some_data));
+    // ... doing something usefull ...
+    // get processed data
+    t.join();
+    std::cout << "  >>> data after processing  : " << some_data << std::endl;
 }
 
 @end
@@ -72,6 +88,11 @@ static void process_copy_data(std::string const& some_data)
     std::cout << "  >>> process_copy_data wit : \"" << some_data << "\"" << std::endl;
 }
 
+static void process_ref_data(std::string& some_data)
+{
+    std::cout << "  >>> thread : presess data ..." << std::endl;
+    some_data.append(" <- processed");
+}
 
 
 
