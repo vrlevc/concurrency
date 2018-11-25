@@ -9,10 +9,14 @@
 #include <string>
 #include <thread>
 
-/// Thread function with string arg by reference
+/// Thread function with string arg by copy, reference, move
 static void f(int i, std::string const& s);
 static void process_copy_data(std::string const& some_data);
 static void process_ref_data(std::string& some_data);
+
+class big_object {};
+static void process_big_object(std::unique_ptr<big_object>);
+
 // MARK: -
 
 @interface chapter02_2ArgumentsTests : XCTestCase
@@ -73,6 +77,18 @@ static void process_ref_data(std::string& some_data);
     std::cout << "  >>> data after processing  : " << some_data << std::endl;
 }
 
+-(void)testMoveArgument
+{
+    /// use std::unique_ptr for transfer object ownership
+    std::unique_ptr<big_object> p(new big_object());
+    std::thread t1(process_big_object, std::move(p));
+    std::thread t2(process_big_object, std::make_unique<big_object>());
+    
+    // get threads done
+    t1.join();
+    t2.join();
+}
+
 -(void)testClassMember
 {
     /// use oblect's function in thread
@@ -131,6 +147,10 @@ static void process_ref_data(std::string& some_data)
     some_data.append(" <- processed");
 }
 
+static void process_big_object(std::unique_ptr<big_object> big_object)
+{
+    
+}
 
 
 
