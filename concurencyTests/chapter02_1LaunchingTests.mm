@@ -11,23 +11,9 @@
 #include <string>
 #include <thread>
 
-// Work done functor
-// Used for test asserts
-class Work
-{
-	static bool done;
-public:
-	Work()  { done = false; }
-	~Work() { done = true ; }
-	static bool isDone() { return done; }
-    static void setTask() { done=false; }
-};
-bool Work::done = false;
-
 /// Thread via function
 void do_some_work()
 {
-	Work work;
 	std::cout<<"  >>> do some work from function \n";
 }
 
@@ -37,7 +23,6 @@ class background_task
 public:
 	void operator()() const
 	{
-		Work work;
 		std::cout<<"  >>> backgroud task";
 		do_some_work();
 	}
@@ -51,7 +36,6 @@ struct func
 	func(int& i_):i(i_){}
 	void operator()()
 	{
-		Work work;
 		for (unsigned j=0;j<10;++j)
 			std::cout<<"  >>> do some work: " << j << "\n";
 	}
@@ -93,17 +77,6 @@ void edit_document(std::string const& filename)
 
 @implementation chapter02_1LaunchingTests
 
-- (void)setUp
-{
-    Work::setTask();
-    XCTAssertFalse(Work::isDone());
-}
-
-- (void)tearDown
-{
-    XCTAssertTrue(Work::isDone());
-}
-
 // MARK: - 2.1.1 Launching a thread
 
 - (void)testThreadFunction
@@ -135,7 +108,6 @@ void edit_document(std::string const& filename)
 {
 	/// Thread by lambda
 	std::thread thread_lambda([]{
-		Work work;
 		std::cout<<"  >>> lambda: do some work from function \n";
 	});
 	
@@ -149,7 +121,7 @@ void edit_document(std::string const& filename)
 // Listing 2.2 : Waiting for a thread to finish
 - (void)testWaitingThread
 {
-    static bool rizeException = false;
+    static bool rizeException = true;
     
     try
     {
@@ -190,7 +162,7 @@ void edit_document(std::string const& filename)
     }
     catch (...)
     {
-        
+		std::cout << "  >>> cought exception ...\n";
     }
 }
 

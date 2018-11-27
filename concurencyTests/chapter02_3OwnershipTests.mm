@@ -51,11 +51,11 @@ public:
 
 // MARK: -
 
-@interface chapter02_3Ownership : XCTestCase
+@interface chapter02_3OwnershipTests : XCTestCase
 
 @end
 
-@implementation chapter02_3Ownership
+@implementation chapter02_3OwnershipTests
 
 // MARK: -
 
