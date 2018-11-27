@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5457324F21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5457324E21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.m */; };
+		5457324F21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5457324E21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm */; };
 		5476062621A6FAA900F07DC1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5476062521A6FAA900F07DC1 /* main.cpp */; };
 		5476063321A6FD5100F07DC1 /* chapter02_3OwnershipTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5476063221A6FD5100F07DC1 /* chapter02_3OwnershipTests.mm */; };
 		5492728321A7E1EA00508D5C /* chapter01_HelloTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5492728221A7E1EA00508D5C /* chapter01_HelloTests.mm */; };
@@ -28,7 +28,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5457324E21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = chapter02_4ThreadsNumberTests.m; sourceTree = "<group>"; };
+		5457324E21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter02_4ThreadsNumberTests.mm; sourceTree = "<group>"; };
 		5476062221A6FAA900F07DC1 /* concurency */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = concurency; sourceTree = BUILT_PRODUCTS_DIR; };
 		5476062521A6FAA900F07DC1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		5476063021A6FD5100F07DC1 /* concurencyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = concurencyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,7 +95,7 @@
 				5492728421A8071F00508D5C /* chapter02_1LaunchingTests.mm */,
 				A964955521A97BA9009E910A /* chapter02_2ArgumentsTests.mm */,
 				5476063221A6FD5100F07DC1 /* chapter02_3OwnershipTests.mm */,
-				5457324E21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.m */,
+				5457324E21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm */,
 			);
 			path = concurencyTests;
 			sourceTree = "<group>";
@@ -197,7 +197,7 @@
 			files = (
 				5476063321A6FD5100F07DC1 /* chapter02_3OwnershipTests.mm in Sources */,
 				A964955621A97BA9009E910A /* chapter02_2ArgumentsTests.mm in Sources */,
-				5457324F21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.m in Sources */,
+				5457324F21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm in Sources */,
 				5492728521A8071F00508D5C /* chapter02_1LaunchingTests.mm in Sources */,
 				5492728321A7E1EA00508D5C /* chapter01_HelloTests.mm in Sources */,
 			);
