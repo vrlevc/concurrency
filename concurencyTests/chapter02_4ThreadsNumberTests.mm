@@ -84,10 +84,17 @@ T parallel_accumulate(Iterator first, Iterator last, T init)
 
 // MARK: -
 
-- (void)testExample
+- (void)testParallelAccumulate
 {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+	static const constexpr int N = 1'000'000;
+	
+	// Prepare data for test:
+	std::vector<int> data(N);
+	for (int i=0;i<N;++i)
+		data[i]=1;
+	
+	// use parallel accumulator
+	XCTAssertEqual(N, parallel_accumulate(data.begin(), data.end(), 0));
 }
 
 
