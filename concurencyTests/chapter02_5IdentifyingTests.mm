@@ -11,7 +11,7 @@
 
 static void printThreadId()
 {
-    std::cout << "  >>> thread id : " << std::this_thread::get_id() << std::endl;
+    std::printf("  >>> thread self id : %#x\n", std::this_thread::get_id());
 }
 
 // MARK: -
@@ -28,9 +28,17 @@ static void printThreadId()
     for (int i=0;i<10;++i)
         pull.push_back( std::thread( printThreadId ) );
     
+    // print thread id
     std::for_each(pull.begin(), pull.end(), [](std::thread& t){
-       std::cout << "  >>> thread id : " << t.get_id() << std::endl;
+        std::printf("  >>> thread id : %#x\n", t.get_id());
     });
+    
+    // print hash for thread id
+    std::for_each(pull.begin(), pull.end(), [](std::thread& t){
+        std::size_t hash = std::hash<std::thread::id>{}(t.get_id());
+        std::printf("  >>> thread hash(id) : %lu\n", hash);
+    });
+    
     std::for_each(pull.begin(), pull.end(), std::mem_fn(&std::thread::join));
 }
 
