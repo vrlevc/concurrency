@@ -8,6 +8,8 @@
 
 #import <XCTest/XCTest.h>
 
+#include "scoped_thread.hpp"
+
 #include <thread>
 #include <vector>
 #include <iostream>
@@ -29,25 +31,6 @@ static void do_work(unsigned id)
 {
     std::cout << "  >>> thread #" << id << " done work" << std::endl;
 }
-
-/// Listing 2.6 : transfer thread ownership
-class scoped_thread
-{
-    std::thread t;
-public:
-    explicit scoped_thread(std::thread t_)
-    : t(std::move(t_))  /// transfer ownership
-    {
-        if (!t.joinable())  /// can be cheked here
-            throw std::logic_error("No thread");
-    }
-    ~scoped_thread()
-    {
-        t.join(); /// fase done thread
-    }
-    scoped_thread(scoped_thread const&)=delete; /// only move
-    scoped_thread& operator=(scoped_thread const&)=delete; /// only move
-};
 
 // MARK: -
 
