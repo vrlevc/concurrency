@@ -11,7 +11,7 @@
 		5457325121AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5457325021AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm */; };
 		5476062621A6FAA900F07DC1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5476062521A6FAA900F07DC1 /* main.cpp */; };
 		5476063321A6FD5100F07DC1 /* chapter02_3OwnershipTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5476063221A6FD5100F07DC1 /* chapter02_3OwnershipTests.mm */; };
-		547DE92521B6709700939FC1 /* chapter03_1MutexTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 547DE92421B6709700939FC1 /* chapter03_1MutexTests.m */; };
+		547DE92521B6709700939FC1 /* chapter03_1MutexTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 547DE92421B6709700939FC1 /* chapter03_1MutexTests.mm */; };
 		5492728321A7E1EA00508D5C /* chapter01_HelloTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5492728221A7E1EA00508D5C /* chapter01_HelloTests.mm */; };
 		5492728521A8071F00508D5C /* chapter02_1LaunchingTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5492728421A8071F00508D5C /* chapter02_1LaunchingTests.mm */; };
 		A964955621A97BA9009E910A /* chapter02_2ArgumentsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = A964955521A97BA9009E910A /* chapter02_2ArgumentsTests.mm */; };
@@ -38,7 +38,7 @@
 		5476063221A6FD5100F07DC1 /* chapter02_3OwnershipTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter02_3OwnershipTests.mm; sourceTree = "<group>"; };
 		5476063421A6FD5100F07DC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5476063821A6FDE000F07DC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		547DE92421B6709700939FC1 /* chapter03_1MutexTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = chapter03_1MutexTests.m; sourceTree = "<group>"; };
+		547DE92421B6709700939FC1 /* chapter03_1MutexTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter03_1MutexTests.mm; sourceTree = "<group>"; };
 		5492728221A7E1EA00508D5C /* chapter01_HelloTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter01_HelloTests.mm; sourceTree = "<group>"; };
 		5492728421A8071F00508D5C /* chapter02_1LaunchingTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter02_1LaunchingTests.mm; sourceTree = "<group>"; };
 		A954537C21AAA46A001A0514 /* thread_guard.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = thread_guard.hpp; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 				5476063221A6FD5100F07DC1 /* chapter02_3OwnershipTests.mm */,
 				5457324E21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm */,
 				5457325021AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm */,
-				547DE92421B6709700939FC1 /* chapter03_1MutexTests.m */,
+				547DE92421B6709700939FC1 /* chapter03_1MutexTests.mm */,
 			);
 			path = concurencyTests;
 			sourceTree = "<group>";
@@ -206,7 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5476063321A6FD5100F07DC1 /* chapter02_3OwnershipTests.mm in Sources */,
-				547DE92521B6709700939FC1 /* chapter03_1MutexTests.m in Sources */,
+				547DE92521B6709700939FC1 /* chapter03_1MutexTests.mm in Sources */,
 				A964955621A97BA9009E910A /* chapter02_2ArgumentsTests.mm in Sources */,
 				5457325121AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm in Sources */,
 				5457324F21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm in Sources */,
