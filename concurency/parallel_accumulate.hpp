@@ -50,16 +50,15 @@ T parallel_accumulate(Iterator first, Iterator last, T init)
     
     /// 5: intermediate results and threads
     std::vector<T> results(num_threads);
-    std::vector<std::thread> threads(num_threads-1); // need to launch one fewer thread than num_threads, because we already have one
+    std::vector<std::thread> threads; // need to launch one fewer thread than num_threads, because we already have one
     
     Iterator block_start = first;
     for (u_long i=0; i<(num_threads-1); ++i)
     {
         Iterator block_end = block_start;
         std::advance(block_end, block_size);    /// 6: end of current block
-        threads[i] = std::thread(                /// 7: launch thread to accumulate results
-                                 accumulate_block<Iterator, T>(),
-                                 block_start, block_end, std::ref(results[i]));
+        threads.emplace_back( accumulate_block<Iterator, T>(), /// 7: launch thread to accumulate results
+                              block_start, block_end, std::ref(results[i]));
         block_start = block_end;    /// 8: The start of the next block is the end of this one
     }
     /// 9: process the final block
