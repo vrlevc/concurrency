@@ -28,26 +28,27 @@ using namespace std::chrono_literals;
 
 - (void)testThreadSafeStack
 {
+	static constexpr int N = 100;
+	
 	using task_t = int;
 	
 	// Allocate test:
 	threadsafe_stack<task_t> some_stack;
 
 	// providers and consumers work together:
-	static constexpr int N = 100;
-	std::vector<std::thread> providers(N);
-	std::vector<std::thread> consumers(N);
+	std::vector<std::thread> providers;
+	std::vector<std::thread> consumers;
 
 	for (int i=0;i<N;++i)
 	{
-		providers[i] = std::thread([data=std::ref(some_stack), start=i*N, n=N]()
+		providers.emplace_back([data=std::ref(some_stack), start=i*N, n=N]()
 		{
 			for (task_t task=start;task<start+n;++task) {
 				data.get().push(task);
 		//		printf("  >>> +++ %d\n", task);
 			}
 		});
-		consumers[i] = std::thread([data=std::ref(some_stack)]()
+		consumers.emplace_back([data=std::ref(some_stack)]()
 		{
 			do
 			{

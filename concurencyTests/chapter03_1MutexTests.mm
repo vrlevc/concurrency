@@ -52,19 +52,21 @@ bool list_contains(int value_to_find)
 	static const constexpr int fillers_number = 10;
 	
 	// working threads:
-	std::vector<std::thread> threads(fillers_number);
+	std::vector<std::thread> threads;
 	
 	// fill list with data
-	for(int i=0; i<threads.size(); ++i)
-		threads[i] = std::thread( [index=i,volume=volume_number]() {
+	for(int i=0; i<fillers_number; ++i)
+		threads.emplace_back( [index=i,volume=volume_number]() {
 			for (int i=0;i<volume;++i)
 				add_to_list(index*volume + i);
 		} );
 	std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
 	
+	threads.clear();
+	
 	// check list for data
-	for (int i=0; i<threads.size(); ++i)
-		threads[i] = std::thread( [index=i,volume=volume_number]() {
+	for (int i=0; i<fillers_number; ++i)
+		threads.emplace_back( [index=i,volume=volume_number]() {
 			for (int i=0;i<volume;++i)
 				if( !list_contains(index*volume + i) ) {
 					printf("  >>> TEST FAILED : no %d such value in list", index*volume + i);

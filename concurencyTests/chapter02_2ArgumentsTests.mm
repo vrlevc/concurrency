@@ -96,29 +96,34 @@ static void process_big_object(std::unique_ptr<big_object>);
     // class for use in spawned threads
     class X
     {
+	private:
+		int id;
     public:
+		explicit X(int id_) : id(id_) {}
         void do_lengthy_work()
         {
-            std::cout << "  >>> do_lengthy_work" << std::endl;
+			std::printf("  >>> X:%d - do_lengthy_work\n", id);
         }
-        void do_lengthy_work_ref(std::string& some_data)
+        void do_lengthy_work(std::string& some_data)
         {
-            std::cout << "  >>> do_lengthy_work with data ref  : " << some_data << std::endl;
+            std::printf("  >>> X:%d - do_lengthy_work with data ref  : %s\n", id, some_data.c_str());
         }
-        void do_lengthy_work_copy(std::string const& some_data)
+        void do_lengthy_work(std::string const& some_data)
         {
-            std::cout << "  >>> do_lengthy_work with data copy : " << some_data << std::endl;
+            std::printf("  >>> X:%d - do_lengthy_work with data copy : %s\n", id, some_data.c_str());
         }
     };
-    
+	
     // data for thread's functions
     std::string some_data{"some_data"};
-    X processor;
+    X processor1(1);
+	X processor2(2);
+	X processor3(3);
     
     // spawn threads with functions of processor
-    std::thread t1(&X::do_lengthy_work, &processor);
-    std::thread t2(&X::do_lengthy_work_ref, &processor, std::ref(some_data));
-    std::thread t3(&X::do_lengthy_work_copy, &processor, some_data);
+	std::thread t1(static_cast<void(X::*)(void)>(&X::do_lengthy_work), &processor1);
+    std::thread t2(static_cast<void(X::*)(std::string&)>(&X::do_lengthy_work), &processor2, std::ref(some_data));
+    std::thread t3(static_cast<void(X::*)(std::string const&)>(&X::do_lengthy_work), &processor3, some_data);
     
     // gether all process
     t1.join();
@@ -138,12 +143,12 @@ static void f(int i, std::string const& s)
 static void process_copy_data(std::string const& some_data)
 {
     // data shoul be copied to been safe usage of it
-    std::cout << "  >>> process_copy_data wit : \"" << some_data << "\"" << std::endl;
+    std::printf("  >>> process_copy_data wit : \"%s\"\n", some_data.c_str());
 }
 
 static void process_ref_data(std::string& some_data)
 {
-    std::cout << "  >>> thread : presess data ..." << std::endl;
+    std::printf("  >>> thread : presess data ...\n");
     some_data.append(" <- processed");
 }
 

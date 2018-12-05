@@ -26,7 +26,7 @@ static void printThreadId()
 {
     std::vector<std::thread> pull;
     for (int i=0;i<10;++i)
-        pull.push_back( std::thread( printThreadId ) );
+        pull.emplace_back( printThreadId );
     
     // print thread id
     std::for_each(pull.begin(), pull.end(), [](std::thread& t){

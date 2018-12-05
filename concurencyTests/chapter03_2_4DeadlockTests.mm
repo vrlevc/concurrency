@@ -48,14 +48,15 @@ public:
 
 - (void)testDeadlock
 {
+	constexpr int N = 1000;
+	
 	X a(10);
 	X b(20);
 	
-	constexpr int N = 1000;
-	std::vector<std::thread> swapers(N);
+	std::vector<std::thread> swapers;
 	for (int i=0;i<N;++i)
 	{
-		swapers[i] = std::thread([lhs=std::ref(a), rhs=std::ref(b)](){
+		swapers.emplace_back([lhs=std::ref(a), rhs=std::ref(b)](){
 			for (int n=0;n<N;++n)
 				swap(lhs.get(), rhs.get());
 		});

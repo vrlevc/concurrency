@@ -13,6 +13,9 @@
 #include <thread>
 #include <vector>
 #include <iostream>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 /// Thread task as callable object
 /// with external data refernece
@@ -23,13 +26,13 @@ struct func
     void operator()()
     {
         for (unsigned j=0;j<10;++j)
-            std::cout<<"  >>> func : do task #" << j << "\n";
+			std::printf("  >>> func : do task #%d\n", i++);
     }
 };
 
 static void do_work(unsigned id)
 {
-    std::cout << "  >>> thread #" << id << " done work" << std::endl;
+    std::printf("  >>> thread #%d done work\n", id);
 }
 
 // MARK: -
@@ -44,9 +47,17 @@ static void do_work(unsigned id)
 
 - (void)testScopedThread
 {
-    int some_local_state = 0;
-    scoped_thread t( std::thread{ func( some_local_state ) } );
-    // do thomethig in current thread ...
+    int some_local_state_A = 10;
+	scoped_thread t( std::thread{ func{ some_local_state_A } } );
+	
+	int some_local_state_B = 100;
+	scoped_thread tt( func{ some_local_state_B } );
+	
+	// do thomethig in current thread ...
+	std::this_thread::sleep_for(1s);
+	
+	XCTAssertTrue(some_local_state_A > 10);
+	XCTAssertTrue(some_local_state_B > 100);
 }
 
 -(void)testVectorThread
@@ -55,7 +66,7 @@ static void do_work(unsigned id)
     
     std::vector<std::thread> threads;
     for (int i=0;i<10;++i)
-        threads.push_back(std::thread(do_work, i));
+        threads.emplace_back(do_work, i);
     
     std::for_each(threads.begin(), threads.end(),
                   std::mem_fn(&std::thread::join));

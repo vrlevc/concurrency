@@ -19,6 +19,11 @@ public:
         if (!t.joinable())  /// can be cheked here
             throw std::logic_error("No thread");
     }
+	template<typename... Args>
+	explicit scoped_thread(Args&&... args)
+	{
+		t = std::thread( std::forward<Args>(args)... );
+	}
     ~scoped_thread()
     {
         t.join(); /// fase done thread
