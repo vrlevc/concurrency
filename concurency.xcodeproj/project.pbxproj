@@ -42,6 +42,7 @@
 		547DE92421B6709700939FC1 /* chapter03_1MutexTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter03_1MutexTests.mm; sourceTree = "<group>"; };
 		5492728221A7E1EA00508D5C /* chapter01_HelloTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter01_HelloTests.mm; sourceTree = "<group>"; };
 		5492728421A8071F00508D5C /* chapter02_1LaunchingTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter02_1LaunchingTests.mm; sourceTree = "<group>"; };
+		54958BA621B7ADC30094E4F6 /* threadsafe_stack.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = threadsafe_stack.hpp; sourceTree = "<group>"; };
 		54EC67C821B67CB600784186 /* chapter03_2_3ThreadSafeIterfaceTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter03_2_3ThreadSafeIterfaceTests.mm; sourceTree = "<group>"; };
 		A954537C21AAA46A001A0514 /* thread_guard.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = thread_guard.hpp; sourceTree = "<group>"; };
 		A960ED0421AF22C400E4E83E /* scoped_thread.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = scoped_thread.hpp; sourceTree = "<group>"; };
@@ -93,6 +94,7 @@
 				A954537C21AAA46A001A0514 /* thread_guard.hpp */,
 				A960ED0421AF22C400E4E83E /* scoped_thread.hpp */,
 				A960ED0521AF235600E4E83E /* parallel_accumulate.hpp */,
+				54958BA621B7ADC30094E4F6 /* threadsafe_stack.hpp */,
 			);
 			path = concurency;
 			sourceTree = "<group>";

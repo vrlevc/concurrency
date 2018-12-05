@@ -8,65 +8,14 @@
 
 #import <XCTest/XCTest.h>
 
-#include <exception>
-#include <memory>		// for std::shared_ptr
-#include <stack>
-#include <mutex>
+#include "threadsafe_stack.hpp"
 
-/// Listing 3.4 An outline class definition for a thread-safe stack
+#include <vector>
+#include <thread>
+#include <chrono>
+#include <iostream>
 
-struct empty_stack : std::exception
-{
-	const char* what() const noexcept;
-};
-
-template<typename T>
-class threadsafe_stack
-{
-private:
-	std::stack<T> data;
-	mutable std::mutex m;
-public:
-	threadsafe_stack() {}
-	threadsafe_stack(const threadsafe_stack& other)
-	{
-		// copy preformed in constructor body
-		std::lock_guard<std::mutex> lock(other.m);
-		data = other.data;
-	}
-	threadsafe_stack& operator=(const threadsafe_stack&) = delete; // assignment operator is deleted
-	
-	void push(T new_value)
-	{
-		std::lock_guard<std::mutex> lock(m);
-		data.push(new_value);
-	}
-	std::shared_ptr<T> pop()	// return top as a pointer, throws exception if empty
-	{
-		std::lock_guard<std::mutex> lock(m);
-		
-		/// Check for empty before trying to pop value:
-		if (data.empty()) throw empty_stack();
-		
-		/// Allocate return value before modify stack:
-		std::shared_ptr<T> const res( std::make_shared<T>(data.top()) );
-		data.pop();
-		
-		return res;
-	}
-	void pop(T& value)			// put top into referenced value, throws exception if empty
-	{
-		std::lock_guard<std::mutex> lock(m);
-		if (data.empty()) throw empty_stack();
-		value = data.top();
-		data.pop();
-	}
-	bool empty() const
-	{
-		std::lock_guard<std::mutex> lock(m);
-		return data.empty();
-	}
-};
+using namespace std::chrono_literals;
 
 // MARK: -
 
@@ -79,8 +28,53 @@ public:
 
 - (void)testThreadSafeStack
 {
+	using task_t = int;
+	
 	// Allocate test:
-	threadsafe_stack<int> some_stack;	
+	threadsafe_stack<task_t> some_stack;
+
+	// providers and consumers work together:
+	static constexpr int N = 100;
+	std::vector<std::thread> providers(N);
+	std::vector<std::thread> consumers(N);
+
+	for (int i=0;i<N;++i)
+	{
+		providers[i] = std::thread([data=std::ref(some_stack), start=i*N, n=N]()
+		{
+			for (task_t task=start;task<start+n;++task) {
+				data.get().push(task);
+		//		printf("  >>> +++ %d\n", task);
+			}
+		});
+		consumers[i] = std::thread([data=std::ref(some_stack)]()
+		{
+			do
+			{
+				try
+				{
+					task_t task = -1;
+					data.get().pop(task);
+			//		printf("  >>> --- %d\n", task);
+				}
+				catch (empty_stack e)
+				{
+				//	std::this_thread::sleep_for(1s);
+				}
+			}
+			while (!data.get().empty());
+		});
+	}
+
+	std::for_each(providers.begin(), providers.end(), std::mem_fn(&std::thread::join));
+	std::for_each(consumers.begin(), consumers.end(), std::mem_fn(&std::thread::join));
+
+	while (!some_stack.empty())
+	{
+		task_t task = -1;
+		try { some_stack.pop(task); } catch (empty_stack e) {};
+		std::printf("  >>> task left : %d\n", task);
+	}
 }
 
 @end
