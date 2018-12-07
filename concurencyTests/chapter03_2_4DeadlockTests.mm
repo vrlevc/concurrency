@@ -30,9 +30,11 @@ public:
 	{
 		if (&lhs==&rhs)
 			return;
+		
+		/// Loack two mutexes together:
 		std::lock(lhs.m, rhs.m);
-		std::lock_guard<std::mutex> lock_a(lhs.m, std::adopt_lock);
-		std::lock_guard<std::mutex> lock_b(rhs.m, std::adopt_lock);
+		std::lock_guard<std::mutex> lock_a(lhs.m, std::adopt_lock); // Just get ownership
+		std::lock_guard<std::mutex> lock_b(rhs.m, std::adopt_lock); // Just get ownership
 		swap(lhs.some_detail, rhs.some_detail);
 	}
 };
