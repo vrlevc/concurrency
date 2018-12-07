@@ -124,6 +124,13 @@ public:
 
 - (void)testHierarchical_mutex
 {
+	constexpr bool siletnt = true;
+	auto log = [](char const * msg)
+	{
+		if (!siletnt)
+			std::printf("  >>> %s\n", msg);
+	};
+	
 	constexpr unsigned long logic_level = 100;
 	constexpr unsigned long core_level = 50;
 	constexpr unsigned long data_level = 10;
@@ -140,10 +147,12 @@ public:
 	// data level functionality:
 	auto get_data = [&](){
 		std::lock_guard<hierarchical_mutex> data_lockG(data_level_mutex);
+		log("get_data");
 		return data;
 	};
 	auto set_data = [&](binary_data_t new_value){
 		std::lock_guard<hierarchical_mutex> data_lockG(data_level_mutex);
+		log("set_data");
 		data = new_value;
 	};
 	
@@ -169,6 +178,7 @@ public:
 			throw std::out_of_range("core data chank does not exist");
 		
 		std::lock_guard<hierarchical_mutex> core_lockG(core_level_mutex);
+		log("update_chunk");
 		core_data[index] = get_data();
 	};
 	auto get_core_chunk = [&](core_data_t::size_type index){
@@ -176,6 +186,7 @@ public:
 			throw std::out_of_range("core data chank does not exist");
 		
 		std::lock_guard<hierarchical_mutex> core_lockG(core_level_mutex);
+		log("get_core_chunk");
 		return (index + 1) * core_data[index];
 	};
 	
@@ -190,26 +201,62 @@ public:
 
 	/// LOGIC --------------------------------------------------
 	
+	// data
+	data_chunk_t sum = 0;
+	
 	// protector/guarg = security
 	hierarchical_mutex logic_level_mutex(logic_level);
 	
 	// logic level functionality
-	auto summ_chanks = [&](){
-		data_chunk_t summ = 0;
+	auto sum_chunks = [&](){
 		std::lock_guard<hierarchical_mutex> logic_lockG(logic_level_mutex);
+		log("sum_chunks");
+		sum = 0;
 		for (int i=0;i<core_chunks_count;++i)
-			summ += get_core_chunk(i);
-		return summ;
-	};
-	auto avg_chanks = [&](){
-		data_chunk_t summ = 0;
-		std::lock_guard<hierarchical_mutex> logic_lockG(logic_level_mutex);
-		for (int i=0;i<core_chunks_count;++i)
-			summ += get_core_chunk(i);
-		return summ / core_chunks_count;
+			sum += get_core_chunk(i);
+		return sum;
 	};
 	
 	// test logic
+	data_chunk_t sum_test = 0;
+	for (int i=0;i<core_data.size();++i)
+		sum_test += get_core_chunk(i);
+	XCTAssertEqual(sum_chunks(), sum_test );
+	
+	/// TEST ---------------------------------------------------
+	
+	std::vector<std::thread> threads;
+	
+	for (int t=0;t<10;++t)
+	{
+		// logic processors
+		threads.emplace_back([&](){
+			for (int i=0;i<10;++i)
+				sum_chunks();
+		});
+		
+		// core processors
+		threads.emplace_back([&](){
+			for (int i=0;i<10;++i)
+				for (core_data_t::size_type c=0;c<core_chunks_count;++c)
+					update_chunk(c);
+		});
+
+		// data processors
+		threads.emplace_back([&](){
+			for (int i=0;i<10;++i)
+				set_data(i);
+		});
+	}
+	std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
+	
+	hierarchical_mutex base_logic_level_mutex( 25 );
+	auto ignore_hiererchy = [&](){
+		std::lock_guard<hierarchical_mutex> base_logic_lockG(base_logic_level_mutex);
+		sum_chunks();
+	};
+	XCTAssertThrows( ignore_hiererchy() );
+	
 }
 
 @end
