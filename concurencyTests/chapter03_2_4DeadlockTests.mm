@@ -122,6 +122,94 @@ public:
 
 /// Listing 3.7 Using a lock hierarchy to prevent deadlock
 
+- (void)testHierarchical_mutex
+{
+	constexpr unsigned long logic_level = 100;
+	constexpr unsigned long core_level = 50;
+	constexpr unsigned long data_level = 10;
+	
+	/// DATA ---------------------------------------------------
 
+	// protected data
+	using binary_data_t = int;
+	binary_data_t data = 10;
+	
+	// protector/guarg = security
+	hierarchical_mutex data_level_mutex(data_level);
+	
+	// data level functionality:
+	auto get_data = [&](){
+		std::lock_guard<hierarchical_mutex> data_lockG(data_level_mutex);
+		return data;
+	};
+	auto set_data = [&](binary_data_t new_value){
+		std::lock_guard<hierarchical_mutex> data_lockG(data_level_mutex);
+		data = new_value;
+	};
+	
+	// test data level:
+	XCTAssertEqual(10, get_data());
+	set_data(20);
+	XCTAssertEqual(20, get_data());
+	
+	/// CORE ---------------------------------------------------
+	
+	// core data
+	using data_chunk_t = long;
+	using core_data_t = std::vector<data_chunk_t>;
+	constexpr core_data_t::size_type core_chunks_count = 5;
+	core_data_t core_data(core_chunks_count, static_cast<data_chunk_t>(0));
+	
+	// protector/guarg = security
+	hierarchical_mutex core_level_mutex(core_level);
+	
+	// core level functionality:
+	auto update_chunk = [&](core_data_t::size_type index){
+		if ( index>=core_data.size() )
+			throw std::out_of_range("core data chank does not exist");
+		
+		std::lock_guard<hierarchical_mutex> core_lockG(core_level_mutex);
+		core_data[index] = get_data();
+	};
+	auto get_core_chunk = [&](core_data_t::size_type index){
+		if ( index>=core_data.size() )
+			throw std::out_of_range("core data chank does not exist");
+		
+		std::lock_guard<hierarchical_mutex> core_lockG(core_level_mutex);
+		return (index + 1) * core_data[index];
+	};
+	
+	// test core level:
+	for (int i=0;i<core_data.size();++i) {
+		XCTAssertEqual(0, get_core_chunk(i));
+		update_chunk(i);
+	}
+	for (int i=0;i<core_data.size();++i)
+		XCTAssertEqual((i+1)*get_data(), get_core_chunk(i));
+	XCTAssertThrows(get_core_chunk(core_data.size()));
+
+	/// LOGIC --------------------------------------------------
+	
+	// protector/guarg = security
+	hierarchical_mutex logic_level_mutex(logic_level);
+	
+	// logic level functionality
+	auto summ_chanks = [&](){
+		data_chunk_t summ = 0;
+		std::lock_guard<hierarchical_mutex> logic_lockG(logic_level_mutex);
+		for (int i=0;i<core_chunks_count;++i)
+			summ += get_core_chunk(i);
+		return summ;
+	};
+	auto avg_chanks = [&](){
+		data_chunk_t summ = 0;
+		std::lock_guard<hierarchical_mutex> logic_lockG(logic_level_mutex);
+		for (int i=0;i<core_chunks_count;++i)
+			summ += get_core_chunk(i);
+		return summ / core_chunks_count;
+	};
+	
+	// test logic
+}
 
 @end
