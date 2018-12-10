@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5429917D21BE39F2003008A2 /* chapter03_3_5HierarchyLockTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5429917C21BE39F2003008A2 /* chapter03_3_5HierarchyLockTests.mm */; };
 		5457324F21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5457324E21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm */; };
 		5457325121AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5457325021AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm */; };
 		5476062621A6FAA900F07DC1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5476062521A6FAA900F07DC1 /* main.cpp */; };
@@ -32,6 +33,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5429917C21BE39F2003008A2 /* chapter03_3_5HierarchyLockTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter03_3_5HierarchyLockTests.mm; sourceTree = "<group>"; };
 		5457324E21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter02_4ThreadsNumberTests.mm; sourceTree = "<group>"; };
 		5457325021AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter02_5IdentifyingTests.mm; sourceTree = "<group>"; };
 		5476062221A6FAA900F07DC1 /* concurency */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = concurency; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,6 +116,7 @@
 				547DE92421B6709700939FC1 /* chapter03_1MutexTests.mm */,
 				54EC67C821B67CB600784186 /* chapter03_2_3ThreadSafeIterfaceTests.mm */,
 				54958BA721B7E9C40094E4F6 /* chapter03_2_4DeadlockTests.mm */,
+				5429917C21BE39F2003008A2 /* chapter03_3_5HierarchyLockTests.mm */,
 			);
 			path = concurencyTests;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				A964955621A97BA9009E910A /* chapter02_2ArgumentsTests.mm in Sources */,
 				54EC67C921B67CB600784186 /* chapter03_2_3ThreadSafeIterfaceTests.mm in Sources */,
 				5457325121AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm in Sources */,
+				5429917D21BE39F2003008A2 /* chapter03_3_5HierarchyLockTests.mm in Sources */,
 				5457324F21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm in Sources */,
 				5492728521A8071F00508D5C /* chapter02_1LaunchingTests.mm in Sources */,
 				5492728321A7E1EA00508D5C /* chapter01_HelloTests.mm in Sources */,
