@@ -26,15 +26,31 @@ public:
 	X(const some_big_object& sd) : some_detail(sd) {};
 	some_big_object v() { return some_detail; }	// NON Thread safe - for testing only!!!
 	
-	friend void swap(X& lhs, X& rhs)
+	friend void swap_lock_guard(X& lhs, X& rhs)
 	{
 		if (&lhs==&rhs)
 			return;
 		
-		/// Loack two mutexes together:
+		/// Lock two mutexes together:
 		std::lock(lhs.m, rhs.m);
 		std::lock_guard<std::mutex> lock_a(lhs.m, std::adopt_lock); // Just get ownership
 		std::lock_guard<std::mutex> lock_b(rhs.m, std::adopt_lock); // Just get ownership
+		swap(lhs.some_detail, rhs.some_detail);
+	}
+	
+	friend void swap_unique_lock(X& lhs, X& rhs)
+	{
+		if (&lhs==&rhs)
+			return;
+		
+		/// If the instance does own the mutex, the destructor must call unlock(),
+		/// and if the instance does not own the mutex, it must not call unlock().
+		/// This flag can be queried by calling the owns_lock() member function.
+		
+		/// std::defer_lock leaves mutexes unlocked
+		std::unique_lock<std::mutex> lock_a(lhs.m, std::defer_lock);
+		std::unique_lock<std::mutex> lock_b(rhs.m, std::defer_lock);
+		std::lock(lock_a, lock_b);	// Lock two mutexes together
 		swap(lhs.some_detail, rhs.some_detail);
 	}
 };
@@ -48,7 +64,7 @@ public:
 
 // MARK: -
 
-- (void)testDeadlock
+- (void)testDeadlock_lock_guard
 {
 	constexpr int N = 1000;
 	
@@ -60,7 +76,28 @@ public:
 	{
 		swapers.emplace_back([lhs=std::ref(a), rhs=std::ref(b)](){
 			for (int n=0;n<N;++n)
-				swap(lhs.get(), rhs.get());
+				swap_lock_guard(lhs.get(), rhs.get());
+		});
+	}
+	
+	std::for_each(swapers.begin(), swapers.end(), std::mem_fn(&std::thread::join));
+	
+	XCTAssertTrue( a.v() + b.v() == 10 + 20 );
+}
+
+- (void)testDeadlock_unique_lock
+{
+	constexpr int N = 1000;
+	
+	X a(10);
+	X b(20);
+	
+	std::vector<std::thread> swapers;
+	for (int i=0;i<N;++i)
+	{
+		swapers.emplace_back([lhs=std::ref(a), rhs=std::ref(b)](){
+			for (int n=0;n<N;++n)
+				swap_unique_lock(lhs.get(), rhs.get());
 		});
 	}
 	
