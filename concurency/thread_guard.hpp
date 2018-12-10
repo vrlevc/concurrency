@@ -14,11 +14,9 @@ class thread_guard
 {
     std::thread& t;
 public:
-    explicit thread_guard(std::thread& t_):t(t_){}
-    ~thread_guard() {
-        if (t.joinable())  /// 1. test joinable before
-            t.join();      /// 2. call join
-    }
+	explicit thread_guard(std::thread& t_);
+	~thread_guard();
+	
     thread_guard(thread_guard const&)=delete;       /// 3. Copying or assigning such an object would be dangerous
     thread_guard& oprator(thread_guard&)=delete;    /// it might then outlive the scope of the thread it was joining.
 };
