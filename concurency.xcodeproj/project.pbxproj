@@ -34,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		5429917C21BE39F2003008A2 /* chapter03_3_5HierarchyLockTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter03_3_5HierarchyLockTests.mm; sourceTree = "<group>"; };
+		5429917E21BE3ACB003008A2 /* hierarchical_mutex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = hierarchical_mutex.hpp; sourceTree = "<group>"; };
 		5457324E21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter02_4ThreadsNumberTests.mm; sourceTree = "<group>"; };
 		5457325021AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter02_5IdentifyingTests.mm; sourceTree = "<group>"; };
 		5476062221A6FAA900F07DC1 /* concurency */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = concurency; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +100,7 @@
 				A960ED0421AF22C400E4E83E /* scoped_thread.hpp */,
 				A960ED0521AF235600E4E83E /* parallel_accumulate.hpp */,
 				54958BA621B7ADC30094E4F6 /* threadsafe_stack.hpp */,
+				5429917E21BE3ACB003008A2 /* hierarchical_mutex.hpp */,
 			);
 			path = concurency;
 			sourceTree = "<group>";
