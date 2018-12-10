@@ -23,6 +23,71 @@
 
 // MARK: -
 
+// Tests for thread_hierarchy_value class
+// 	  explicit thread_hierarchy_value(unsigned long value);
+//    void check_for_violation();
+//    void update();
+//    void restor();
+
+- (void)test__thread_hierarchy_value
+{
+	thread_hierarchy_value thv500(500);
+	thread_hierarchy_value thv300(300);
+	thread_hierarchy_value thv100(100);
+
+	// --- MAX --- //
+	thv500.check_for_violation();
+	thv300.check_for_violation();
+	thv100.check_for_violation();
+	
+	// --- 500 --- //
+	thv500.update();
+	
+	// thread hierarchical value can be reduce only:
+	XCTAssertThrows(thv500.check_for_violation());
+	thv300.check_for_violation(); // OK!!!
+	thv100.check_for_violation(); // OK!!!
+	
+	// --- 300 --- //
+	thv300.update();
+	
+	// thread hierarchical value can be reduce only:
+	XCTAssertThrows(thv500.check_for_violation());
+	XCTAssertThrows(thv300.check_for_violation());
+	thv100.check_for_violation();  // OK!!!
+	
+	// --- 100 --- //
+	thv100.update();
+	
+	// thread hierarchical value can be reduce only:
+	XCTAssertThrows(thv500.check_for_violation());
+	XCTAssertThrows(thv300.check_for_violation());
+	XCTAssertThrows(thv100.check_for_violation());
+
+	// +++++ RESTORING +++++ //
+	
+	// --- 300 --- //
+	thv100.restor();
+	
+	XCTAssertThrows(thv500.check_for_violation());
+	XCTAssertThrows(thv300.check_for_violation());
+	thv100.check_for_violation();  // OK!!!
+	
+	// --- 500 --- //
+	thv300.restor();
+	
+	XCTAssertThrows(thv500.check_for_violation());
+	thv300.check_for_violation(); // OK!!!
+	thv100.check_for_violation(); // OK!!!
+	
+	// --- MAX --- //
+	thv500.restor();
+	
+	thv500.check_for_violation();
+	thv300.check_for_violation();
+	thv100.check_for_violation();
+}
+
 /// Listing 3.7 Using a lock hierarchy to prevent deadlock
 
 - (void)testHierarchical_mutex

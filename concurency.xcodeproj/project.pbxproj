@@ -12,6 +12,8 @@
 		5429918121BE3D92003008A2 /* thread_guard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5429917F21BE3D92003008A2 /* thread_guard.cpp */; };
 		5429918321BE3EA5003008A2 /* scoped_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5429918221BE3EA5003008A2 /* scoped_thread.cpp */; };
 		5429918421BE3EA5003008A2 /* scoped_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5429918221BE3EA5003008A2 /* scoped_thread.cpp */; };
+		5429918721BE401D003008A2 /* hierarchical_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5429918621BE401D003008A2 /* hierarchical_mutex.cpp */; };
+		5429918821BE401D003008A2 /* hierarchical_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5429918621BE401D003008A2 /* hierarchical_mutex.cpp */; };
 		5457324F21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5457324E21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm */; };
 		5457325121AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5457325021AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm */; };
 		5476062621A6FAA900F07DC1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5476062521A6FAA900F07DC1 /* main.cpp */; };
@@ -41,6 +43,7 @@
 		5429917E21BE3ACB003008A2 /* hierarchical_mutex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = hierarchical_mutex.hpp; sourceTree = "<group>"; };
 		5429917F21BE3D92003008A2 /* thread_guard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_guard.cpp; sourceTree = "<group>"; };
 		5429918221BE3EA5003008A2 /* scoped_thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scoped_thread.cpp; sourceTree = "<group>"; };
+		5429918621BE401D003008A2 /* hierarchical_mutex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = hierarchical_mutex.cpp; sourceTree = "<group>"; };
 		5457324E21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter02_4ThreadsNumberTests.mm; sourceTree = "<group>"; };
 		5457325021AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter02_5IdentifyingTests.mm; sourceTree = "<group>"; };
 		5476062221A6FAA900F07DC1 /* concurency */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = concurency; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,7 +104,6 @@
 		5476062421A6FAA900F07DC1 /* concurency */ = {
 			isa = PBXGroup;
 			children = (
-				5476062521A6FAA900F07DC1 /* main.cpp */,
 				A954537C21AAA46A001A0514 /* thread_guard.hpp */,
 				5429917F21BE3D92003008A2 /* thread_guard.cpp */,
 				A960ED0421AF22C400E4E83E /* scoped_thread.hpp */,
@@ -109,6 +111,8 @@
 				A960ED0521AF235600E4E83E /* parallel_accumulate.hpp */,
 				54958BA621B7ADC30094E4F6 /* threadsafe_stack.hpp */,
 				5429917E21BE3ACB003008A2 /* hierarchical_mutex.hpp */,
+				5429918621BE401D003008A2 /* hierarchical_mutex.cpp */,
+				5476062521A6FAA900F07DC1 /* main.cpp */,
 			);
 			path = concurency;
 			sourceTree = "<group>";
@@ -218,6 +222,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5429918721BE401D003008A2 /* hierarchical_mutex.cpp in Sources */,
 				5476062621A6FAA900F07DC1 /* main.cpp in Sources */,
 				5429918021BE3D92003008A2 /* thread_guard.cpp in Sources */,
 				5429918321BE3EA5003008A2 /* scoped_thread.cpp in Sources */,
@@ -234,6 +239,7 @@
 				A964955621A97BA9009E910A /* chapter02_2ArgumentsTests.mm in Sources */,
 				54EC67C921B67CB600784186 /* chapter03_2_3ThreadSafeIterfaceTests.mm in Sources */,
 				5457325121AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm in Sources */,
+				5429918821BE401D003008A2 /* hierarchical_mutex.cpp in Sources */,
 				5429917D21BE39F2003008A2 /* chapter03_3_5HierarchyLockTests.mm in Sources */,
 				5457324F21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm in Sources */,
 				5492728521A8071F00508D5C /* chapter02_1LaunchingTests.mm in Sources */,
