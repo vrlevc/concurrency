@@ -55,6 +55,32 @@ public:
 	}
 };
 
+class Y
+{
+private:
+	int some_detail;
+	mutable std::mutex m;
+	
+	int get_detail() const
+	{
+		/// Function return value by protecting it:
+		std::lock_guard<std::mutex> lock_a(m);
+		return some_detail;
+	}
+	
+public:
+	Y(int sd) : some_detail(sd) {}
+	
+	friend bool operator==(Y const& lhs, Y const& rhs)
+	{
+		if (&lhs==&rhs)
+			return true;
+		int const lhs_value = lhs.get_detail();
+		int const rhs_value = rhs.get_detail();
+		return lhs_value==rhs_value;	/// Compare copies
+	}
+};
+
 // MARK: -
 
 @interface chapter03_2_4DeadlockTests : XCTestCase
@@ -144,6 +170,18 @@ public:
 	// e.g. write processed data chunk back to protected data ...
 	
 	// RAII - std::unique_lock will unlock mutex on exit ...
+}
+
+- (void)testGranularityLockingByCopy
+{
+	Y y1(100);
+	Y y2(200);
+	XCTAssertFalse( y1==y2 );
+	
+	std::vector<std::thread> threads;
+	for (int t=0;t<20;++t)
+		threads.emplace_back([&](){ XCTAssertFalse(y1==y2); });
+	std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
 }
 
 @end
