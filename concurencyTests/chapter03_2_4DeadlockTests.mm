@@ -106,4 +106,25 @@ public:
 	XCTAssertTrue( a.v() + b.v() == 10 + 20 );
 }
 
+- (void)testTransferingLockOwnership
+{
+	std::mutex some_mutex;
+	
+	auto get_lock = [&]()
+	{
+		std::unique_lock<std::mutex> lk(some_mutex);
+		// ... doing thomething for getting data ...
+		return lk;
+	};
+	
+	auto process_data = [&]()
+	{
+		std::unique_lock<std::mutex> lk( get_lock() );
+		// ... doing thomething ...
+	};
+	
+	// test:
+	process_data();
+}
+
 @end
