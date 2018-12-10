@@ -127,4 +127,23 @@ public:
 	process_data();
 }
 
+- (void)testGranularityLocking
+{
+	std::mutex some_mutex;
+	
+	// Lock mutex and work with protected data
+	std::unique_lock<std::mutex> lock(some_mutex);
+	// e.g. get next data chunk for porcesing ...
+	
+	// Unlock mutex for processing data
+	lock.unlock();
+	// e.g. process current obtained data chunk ...
+	
+	// Lock mutex back to writing data
+	lock.lock();
+	// e.g. write processed data chunk back to protected data ...
+	
+	// RAII - std::unique_lock will unlock mutex on exit ...
+}
+
 @end
