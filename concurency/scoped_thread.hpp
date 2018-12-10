@@ -13,23 +13,19 @@ class scoped_thread
 {
     std::thread t;
 public:
-    explicit scoped_thread(std::thread t_)
-    : t(std::move(t_))  /// transfer ownership
-    {
-        if (!t.joinable())  /// can be cheked here
-            throw std::logic_error("No thread");
-    }
 	template<typename... Args>
-	explicit scoped_thread(Args&&... args)
-	{
-		t = std::thread( std::forward<Args>(args)... );
-	}
-    ~scoped_thread()
-    {
-        t.join(); /// fase done thread
-    }
+	explicit scoped_thread(Args&&... args);
+	explicit scoped_thread(std::thread t_);
+	~scoped_thread();
+	
     scoped_thread(scoped_thread const&)=delete; /// only move
     scoped_thread& operator=(scoped_thread const&)=delete; /// only move
 };
+
+template<typename... Args>
+scoped_thread::scoped_thread(Args&&... args)
+{
+	t = std::thread( std::forward<Args>(args)... );
+}
 
 #endif /* scoped_thread_h */
