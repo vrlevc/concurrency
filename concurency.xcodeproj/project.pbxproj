@@ -121,18 +121,42 @@
 			isa = PBXGroup;
 			children = (
 				5476063421A6FD5100F07DC1 /* Info.plist */,
+				5496C3DD21C3D98F00E2FEB5 /* c01 Hello */,
+				5496C3E021C3D9E900E2FEB5 /* c02 Managing threads */,
+				5496C3E121C3DA2300E2FEB5 /* c03 Sharing data between threads */,
+			);
+			path = concurencyTests;
+			sourceTree = "<group>";
+		};
+		5496C3DD21C3D98F00E2FEB5 /* c01 Hello */ = {
+			isa = PBXGroup;
+			children = (
 				5492728221A7E1EA00508D5C /* c01_HelloTests.mm */,
+			);
+			name = "c01 Hello";
+			sourceTree = "<group>";
+		};
+		5496C3E021C3D9E900E2FEB5 /* c02 Managing threads */ = {
+			isa = PBXGroup;
+			children = (
 				5492728421A8071F00508D5C /* c02_1LaunchingTests.mm */,
 				A964955521A97BA9009E910A /* c02_2ArgumentsTests.mm */,
 				5476063221A6FD5100F07DC1 /* c02_3OwnershipTests.mm */,
 				5457324E21AD282300C3AE4A /* c02_4ThreadsNumberTests.mm */,
 				5457325021AD4BAC00C3AE4A /* c02_5IdentifyingTests.mm */,
+			);
+			name = "c02 Managing threads";
+			sourceTree = "<group>";
+		};
+		5496C3E121C3DA2300E2FEB5 /* c03 Sharing data between threads */ = {
+			isa = PBXGroup;
+			children = (
 				547DE92421B6709700939FC1 /* c03_1MutexTests.mm */,
 				54EC67C821B67CB600784186 /* c03_2_3ThreadSafeIterfaceTests.mm */,
 				54958BA721B7E9C40094E4F6 /* c03_2_4DeadlockTests.mm */,
 				5429917C21BE39F2003008A2 /* c03_2_5HierarchyLockTests.mm */,
 			);
-			path = concurencyTests;
+			name = "c03 Sharing data between threads";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
