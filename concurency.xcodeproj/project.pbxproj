@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5429917D21BE39F2003008A2 /* chapter03_3_5HierarchyLockTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5429917C21BE39F2003008A2 /* chapter03_3_5HierarchyLockTests.mm */; };
+		5429917D21BE39F2003008A2 /* chapter03_2_5HierarchyLockTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5429917C21BE39F2003008A2 /* chapter03_2_5HierarchyLockTests.mm */; };
 		5429918021BE3D92003008A2 /* thread_guard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5429917F21BE3D92003008A2 /* thread_guard.cpp */; };
 		5429918121BE3D92003008A2 /* thread_guard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5429917F21BE3D92003008A2 /* thread_guard.cpp */; };
 		5429918321BE3EA5003008A2 /* scoped_thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5429918221BE3EA5003008A2 /* scoped_thread.cpp */; };
@@ -39,7 +39,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5429917C21BE39F2003008A2 /* chapter03_3_5HierarchyLockTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter03_3_5HierarchyLockTests.mm; sourceTree = "<group>"; };
+		5429917C21BE39F2003008A2 /* chapter03_2_5HierarchyLockTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = chapter03_2_5HierarchyLockTests.mm; sourceTree = "<group>"; };
 		5429917E21BE3ACB003008A2 /* hierarchical_mutex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = hierarchical_mutex.hpp; sourceTree = "<group>"; };
 		5429917F21BE3D92003008A2 /* thread_guard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_guard.cpp; sourceTree = "<group>"; };
 		5429918221BE3EA5003008A2 /* scoped_thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scoped_thread.cpp; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 				547DE92421B6709700939FC1 /* chapter03_1MutexTests.mm */,
 				54EC67C821B67CB600784186 /* chapter03_2_3ThreadSafeIterfaceTests.mm */,
 				54958BA721B7E9C40094E4F6 /* chapter03_2_4DeadlockTests.mm */,
-				5429917C21BE39F2003008A2 /* chapter03_3_5HierarchyLockTests.mm */,
+				5429917C21BE39F2003008A2 /* chapter03_2_5HierarchyLockTests.mm */,
 			);
 			path = concurencyTests;
 			sourceTree = "<group>";
@@ -240,7 +240,7 @@
 				54EC67C921B67CB600784186 /* chapter03_2_3ThreadSafeIterfaceTests.mm in Sources */,
 				5457325121AD4BAC00C3AE4A /* chapter02_5IdentifyingTests.mm in Sources */,
 				5429918821BE401D003008A2 /* hierarchical_mutex.cpp in Sources */,
-				5429917D21BE39F2003008A2 /* chapter03_3_5HierarchyLockTests.mm in Sources */,
+				5429917D21BE39F2003008A2 /* chapter03_2_5HierarchyLockTests.mm in Sources */,
 				5457324F21AD282300C3AE4A /* chapter02_4ThreadsNumberTests.mm in Sources */,
 				5492728521A8071F00508D5C /* chapter02_1LaunchingTests.mm in Sources */,
 				5492728321A7E1EA00508D5C /* chapter01_HelloTests.mm in Sources */,
