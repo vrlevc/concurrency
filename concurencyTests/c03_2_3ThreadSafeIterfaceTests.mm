@@ -19,10 +19,10 @@ using namespace std::chrono_literals;
 
 // MARK: -
 
-@interface chapter03_2_3ThreadSafeIterfaceTests : XCTestCase
+@interface c03_2_3ThreadSafeIterfaceTests : XCTestCase
 @end
 
-@implementation chapter03_2_3ThreadSafeIterfaceTests
+@implementation c03_2_3ThreadSafeIterfaceTests
 
 // MARK: -
 

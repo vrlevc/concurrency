@@ -71,11 +71,11 @@ void edit_document(std::string const& filename)
 
 // MARK: -
 
-@interface chapter02_1LaunchingTests : XCTestCase
+@interface c02_1LaunchingTests : XCTestCase
 
 @end
 
-@implementation chapter02_1LaunchingTests
+@implementation c02_1LaunchingTests
 
 // MARK: - 2.1.1 Launching a thread
 

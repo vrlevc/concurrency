@@ -16,9 +16,10 @@ static void printThreadId()
 
 // MARK: -
 
-@interface chapter02_5IdentifyingTests : XCTestCase
+@interface c02_5IdentifyingTests : XCTestCase
 @end
-@implementation chapter02_5IdentifyingTests
+
+@implementation c02_5IdentifyingTests
 
 // MARK: -
 

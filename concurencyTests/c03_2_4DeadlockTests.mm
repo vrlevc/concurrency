@@ -83,10 +83,10 @@ public:
 
 // MARK: -
 
-@interface chapter03_2_4DeadlockTests : XCTestCase
+@interface c03_2_4DeadlockTests : XCTestCase
 @end
 
-@implementation chapter03_2_4DeadlockTests
+@implementation c03_2_4DeadlockTests
 
 // MARK: -
 

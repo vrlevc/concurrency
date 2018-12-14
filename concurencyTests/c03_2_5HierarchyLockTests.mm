@@ -16,10 +16,10 @@
 
 // MARK: -
 
-@interface chapter03_2_5HierarchyLockTests : XCTestCase
+@interface c03_2_5HierarchyLockTests : XCTestCase
 @end
 
-@implementation chapter03_2_5HierarchyLockTests
+@implementation c03_2_5HierarchyLockTests
 
 // MARK: -
 

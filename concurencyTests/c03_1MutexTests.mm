@@ -36,10 +36,10 @@ bool list_contains(int value_to_find)
 
 // MARK: -
 
-@interface chapter03_1MutexTests : XCTestCase
+@interface c03_1MutexTests : XCTestCase
 @end
 
-@implementation chapter03_1MutexTests
+@implementation c03_1MutexTests
 
 // MARK: -
 

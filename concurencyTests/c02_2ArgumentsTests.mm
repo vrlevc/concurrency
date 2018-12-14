@@ -19,11 +19,11 @@ static void process_big_object(std::unique_ptr<big_object>);
 
 // MARK: -
 
-@interface chapter02_2ArgumentsTests : XCTestCase
+@interface c02_2ArgumentsTests : XCTestCase
 
 @end
 
-@implementation chapter02_2ArgumentsTests
+@implementation c02_2ArgumentsTests
 
 // MARK: -
 

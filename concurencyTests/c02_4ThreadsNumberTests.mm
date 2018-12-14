@@ -12,11 +12,11 @@
 
 // MARK: -
 
-@interface chapter02_4ThreadsNumberTests : XCTestCase
+@interface c02_4ThreadsNumberTests : XCTestCase
 
 @end
 
-@implementation chapter02_4ThreadsNumberTests
+@implementation c02_4ThreadsNumberTests
 
 // MARK: -
 

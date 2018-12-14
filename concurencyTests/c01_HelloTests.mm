@@ -15,11 +15,11 @@ void hello() /// 2: thread has to have an initial function
 
 // MARK: -
 
-@interface chapter01_HelloTests : XCTestCase
+@interface c01_HelloTests : XCTestCase
 
 @end
 
-@implementation chapter01_HelloTests
+@implementation c01_HelloTests
 
 // MARK: -
 

@@ -37,11 +37,11 @@ static void do_work(unsigned id)
 
 // MARK: -
 
-@interface chapter02_3OwnershipTests : XCTestCase
+@interface c02_3OwnershipTests : XCTestCase
 
 @end
 
-@implementation chapter02_3OwnershipTests
+@implementation c02_3OwnershipTests
 
 // MARK: -
 
