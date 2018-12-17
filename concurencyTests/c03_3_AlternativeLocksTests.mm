@@ -192,7 +192,7 @@ struct some_resource_t
 	public:
 		dns_entry find_entry(std::string const & domain) const
 		{
-			// support mutilock from other threads
+			// support mutilock from other threads - READING
 			std::shared_lock<std::shared_mutex> lk(entry_mutex);
 			std::printf("  >>> read - shared protected");
 			std::map<std::string,dns_entry>::const_iterator const it = entries.find(domain);
@@ -201,6 +201,7 @@ struct some_resource_t
 		void update_or_add_entry(std::string const & domain,
 								 dns_entry const & dns_details)
 		{
+			// exclusive lock - WRITTING
 			std::lock_guard<std::shared_mutex> lk(entry_mutex);
 			std::printf("\n  >>> update/add - unique protected\n");
 			entries[domain]=dns_details;
@@ -235,6 +236,13 @@ struct some_resource_t
 		});
 
 	std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
+}
+
+// MARK: - std::recursive_mutex
+
+-(void)testRecursiveLock
+{
+	
 }
 
 @end
