@@ -9,9 +9,12 @@
 #import <XCTest/XCTest.h>
 
 #include <mutex>
+#include <shared_mutex>
 #include <thread>
 #include <memory>
 #include <vector>
+#include <string>
+#include <map>
 
 struct some_resource_t
 {
@@ -53,6 +56,7 @@ struct some_resource_t
 	std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
 }
 
+// MARK: - std::call_once
 /// ------------------------------- ///
 /// std::once_flag & std::call_once ///
 /// ------------------------------- ///
@@ -166,6 +170,38 @@ struct some_resource_t
 		users.emplace_back(&X::recieve_data, &receiver);
 	}
 	std::for_each(users.begin(), users.end(), std::mem_fn(&std::thread::join));
+}
+
+// MARK: - std::shared_mutex
+/// ------------------------------- ///
+/// std::shared_mutex			    ///
+/// ------------------------------- ///
+
+/// Listing 3.13 Protecting a data structure with a std::shared_mutex
+
+-(void) testSharedDataProtection
+{
+	using dns_entry = std::string;
+	
+	class dns_cache
+	{
+		std::map<std::string, dns_entry> entries;
+		mutable std::shared_mutex entry_mutex;
+	public:
+		dns_entry find_entry(std::string const & domain) const
+		{
+			// support mutilock from other threads
+			std::shared_lock<std::shared_mutex> lk(entry_mutex);
+			std::map<std::string,dns_entry>::const_iterator const it = entries.find(domain);
+			return (it==entries.end())?dns_entry():it->second;
+		}
+		void update_or_add_entry(std::string const & domain,
+								 dns_entry const & dns_details)
+		{
+			std::lock_guard<std::shared_mutex> lk(entry_mutex);
+			entries[domain]=dns_details;
+		}
+	};
 }
 
 @end
