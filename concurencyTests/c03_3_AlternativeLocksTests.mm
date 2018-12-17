@@ -242,7 +242,21 @@ struct some_resource_t
 
 -(void)testRecursiveLock
 {
+	class A
+	{
+		int some_data;
+		std::recursive_mutex recursive_mutex;
+	public:
+		void foo() { std::lock_guard<std::recursive_mutex> lg(recursive_mutex); goo(); }
+		void goo() { std::lock_guard<std::recursive_mutex> lg(recursive_mutex); hoo(); }
+		void hoo() { std::lock_guard<std::recursive_mutex> lg(recursive_mutex); }
+	};
 	
+	A a;
+	std::vector<std::thread> threads;
+	for (int i=0;i<10;++i)
+		threads.emplace_back(&A::foo, &a);
+	std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
 }
 
 @end
