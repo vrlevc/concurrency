@@ -15,7 +15,9 @@ class scoped_thread
 public:
 	template<typename... Args>
 	explicit scoped_thread(Args&&... args);
-	explicit scoped_thread(std::thread t_);
+	explicit scoped_thread(std::thread&& t_);
+	scoped_thread(scoped_thread&& other);
+	scoped_thread& operator=(scoped_thread&& other);
 	~scoped_thread();
 	
     scoped_thread(scoped_thread const&)=delete; /// only move

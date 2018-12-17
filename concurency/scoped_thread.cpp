@@ -8,12 +8,16 @@
 
 #include "scoped_thread.hpp"
 
-scoped_thread::scoped_thread(std::thread t_)
+scoped_thread::scoped_thread(std::thread&& t_)
 	: t(std::move(t_))  /// transfer ownership
 {
 	if (!t.joinable())  /// can be cheked here
 		throw std::logic_error("No thread");
 }
+
+scoped_thread::scoped_thread(scoped_thread&& other) = default;
+
+scoped_thread& scoped_thread::operator=(scoped_thread&& other) = default;
 
 scoped_thread::~scoped_thread()
 {

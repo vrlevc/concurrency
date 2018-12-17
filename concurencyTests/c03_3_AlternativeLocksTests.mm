@@ -8,6 +8,8 @@
 
 #import <XCTest/XCTest.h>
 
+#include "scoped_thread.hpp"
+
 #include <mutex>
 #include <shared_mutex>
 #include <thread>
@@ -192,6 +194,7 @@ struct some_resource_t
 		{
 			// support mutilock from other threads
 			std::shared_lock<std::shared_mutex> lk(entry_mutex);
+			std::printf("  >>> read - shared protected");
 			std::map<std::string,dns_entry>::const_iterator const it = entries.find(domain);
 			return (it==entries.end())?dns_entry():it->second;
 		}
@@ -199,9 +202,39 @@ struct some_resource_t
 								 dns_entry const & dns_details)
 		{
 			std::lock_guard<std::shared_mutex> lk(entry_mutex);
+			std::printf("\n  >>> update/add - unique protected\n");
 			entries[domain]=dns_details;
 		}
 	};
+	
+	// Test data
+	dns_cache DNS_Server;
+	DNS_Server.update_or_add_entry("aaa.com", "10.20");
+	DNS_Server.update_or_add_entry("bbb.com", "10.30");
+	DNS_Server.update_or_add_entry("ccc.com", "20.20");
+	DNS_Server.update_or_add_entry("ddd.com", "30.20");
+	
+	std::vector<std::thread> threads;
+	for (int i=0;i<50;++i)
+		threads.emplace_back([&DNS_Server]() {
+			DNS_Server.find_entry("aaa.com");
+			DNS_Server.find_entry("bbb.com");
+			DNS_Server.find_entry("ccc.com");
+			DNS_Server.find_entry("xxx.com");
+		});
+	
+	DNS_Server.update_or_add_entry("ccc.com", "25.20");
+	DNS_Server.update_or_add_entry("eee.com", "10.70");
+	
+	for (int i=0;i<50;++i)
+		threads.emplace_back([&DNS_Server]() {
+			DNS_Server.find_entry("aaa.com");
+			DNS_Server.find_entry("bbb.com");
+			DNS_Server.find_entry("ccc.com");
+			DNS_Server.find_entry("xxx.com");
+		});
+
+	std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
 }
 
 @end
