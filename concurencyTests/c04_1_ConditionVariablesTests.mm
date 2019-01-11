@@ -13,7 +13,6 @@
 #include <mutex>
 #include <condition_variable>
 #include <thread>
-#include "threadsafe_queue.hpp"
 
 struct raw_data_t
 {
@@ -21,7 +20,7 @@ struct raw_data_t
     int index;
 };
 using data_storage_t = std::list<raw_data_t>;
-data_storage_t storage;
+static data_storage_t storage;
 static bool more_data_to_prepare();
 using data_chunk = std::string;
 static data_chunk prepare_data();
