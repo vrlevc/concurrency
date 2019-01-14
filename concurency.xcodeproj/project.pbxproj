@@ -17,6 +17,7 @@
 		5457324F21AD282300C3AE4A /* c02_4ThreadsNumberTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5457324E21AD282300C3AE4A /* c02_4ThreadsNumberTests.mm */; };
 		5457325121AD4BAC00C3AE4A /* c02_5IdentifyingTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5457325021AD4BAC00C3AE4A /* c02_5IdentifyingTests.mm */; };
 		54645E5D21E88FEC00DD22BF /* c04_1_2ThreadsafeQueueTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 54645E5C21E88FEC00DD22BF /* c04_1_2ThreadsafeQueueTests.mm */; };
+		54645E5F21EC75F500DD22BF /* c04_2_1FutureBasicTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 54645E5E21EC75F500DD22BF /* c04_2_1FutureBasicTests.mm */; };
 		5476062621A6FAA900F07DC1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5476062521A6FAA900F07DC1 /* main.cpp */; };
 		5476063321A6FD5100F07DC1 /* c02_3OwnershipTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5476063221A6FD5100F07DC1 /* c02_3OwnershipTests.mm */; };
 		547DE92521B6709700939FC1 /* c03_1MutexTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 547DE92421B6709700939FC1 /* c03_1MutexTests.mm */; };
@@ -50,6 +51,7 @@
 		5457324E21AD282300C3AE4A /* c02_4ThreadsNumberTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = c02_4ThreadsNumberTests.mm; sourceTree = "<group>"; };
 		5457325021AD4BAC00C3AE4A /* c02_5IdentifyingTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = c02_5IdentifyingTests.mm; sourceTree = "<group>"; };
 		54645E5C21E88FEC00DD22BF /* c04_1_2ThreadsafeQueueTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = c04_1_2ThreadsafeQueueTests.mm; sourceTree = "<group>"; };
+		54645E5E21EC75F500DD22BF /* c04_2_1FutureBasicTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = c04_2_1FutureBasicTests.mm; sourceTree = "<group>"; };
 		5476062221A6FAA900F07DC1 /* concurency */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = concurency; sourceTree = BUILT_PRODUCTS_DIR; };
 		5476062521A6FAA900F07DC1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		5476063021A6FD5100F07DC1 /* concurencyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = concurencyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,6 +176,7 @@
 			children = (
 				54B1B5E421CB80CE00C6799B /* c04_1_ConditionVariablesTests.mm */,
 				54645E5C21E88FEC00DD22BF /* c04_1_2ThreadsafeQueueTests.mm */,
+				54645E5E21EC75F500DD22BF /* c04_2_1FutureBasicTests.mm */,
 			);
 			name = "c04 Synchronizing concurrent operations";
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				5476063321A6FD5100F07DC1 /* c02_3OwnershipTests.mm in Sources */,
 				5496C3E321C3DC9400E2FEB5 /* c03_3_AlternativeLocksTests.mm in Sources */,
 				5429918121BE3D92003008A2 /* thread_guard.cpp in Sources */,
+				54645E5F21EC75F500DD22BF /* c04_2_1FutureBasicTests.mm in Sources */,
 				547DE92521B6709700939FC1 /* c03_1MutexTests.mm in Sources */,
 				A964955621A97BA9009E910A /* c02_2ArgumentsTests.mm in Sources */,
 				54EC67C921B67CB600784186 /* c03_2_3ThreadSafeIterfaceTests.mm in Sources */,
