@@ -21,6 +21,7 @@
 		5476062621A6FAA900F07DC1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5476062521A6FAA900F07DC1 /* main.cpp */; };
 		5476063321A6FD5100F07DC1 /* c02_3OwnershipTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5476063221A6FD5100F07DC1 /* c02_3OwnershipTests.mm */; };
 		547DE92521B6709700939FC1 /* c03_1MutexTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 547DE92421B6709700939FC1 /* c03_1MutexTests.mm */; };
+		5482B1BC21FF69A700EB495E /* c04_2_3MakingPromisesTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5482B1BB21FF69A700EB495E /* c04_2_3MakingPromisesTests.mm */; };
 		5492728321A7E1EA00508D5C /* c01_HelloTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5492728221A7E1EA00508D5C /* c01_HelloTests.mm */; };
 		5492728521A8071F00508D5C /* c02_1LaunchingTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5492728421A8071F00508D5C /* c02_1LaunchingTests.mm */; };
 		54958BA821B7E9C40094E4F6 /* c03_2_4DeadlockTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 54958BA721B7E9C40094E4F6 /* c03_2_4DeadlockTests.mm */; };
@@ -60,6 +61,7 @@
 		5476063421A6FD5100F07DC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5476063821A6FDE000F07DC1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		547DE92421B6709700939FC1 /* c03_1MutexTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = c03_1MutexTests.mm; sourceTree = "<group>"; };
+		5482B1BB21FF69A700EB495E /* c04_2_3MakingPromisesTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = c04_2_3MakingPromisesTests.mm; sourceTree = "<group>"; };
 		5492728221A7E1EA00508D5C /* c01_HelloTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = c01_HelloTests.mm; sourceTree = "<group>"; };
 		5492728421A8071F00508D5C /* c02_1LaunchingTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = c02_1LaunchingTests.mm; sourceTree = "<group>"; };
 		54958BA621B7ADC30094E4F6 /* threadsafe_stack.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = threadsafe_stack.hpp; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				54645E5C21E88FEC00DD22BF /* c04_1_2ThreadsafeQueueTests.mm */,
 				54645E5E21EC75F500DD22BF /* c04_2_1FutureBasicTests.mm */,
 				54AA4F3E21EDBF61009590B6 /* c04_2_2PackagedTaskTests.mm */,
+				5482B1BB21FF69A700EB495E /* c04_2_3MakingPromisesTests.mm */,
 			);
 			name = "c04 Synchronizing concurrent operations";
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5476063321A6FD5100F07DC1 /* c02_3OwnershipTests.mm in Sources */,
+				5482B1BC21FF69A700EB495E /* c04_2_3MakingPromisesTests.mm in Sources */,
 				5496C3E321C3DC9400E2FEB5 /* c03_3_AlternativeLocksTests.mm in Sources */,
 				5429918121BE3D92003008A2 /* thread_guard.cpp in Sources */,
 				54645E5F21EC75F500DD22BF /* c04_2_1FutureBasicTests.mm in Sources */,
