@@ -11,6 +11,7 @@
 #include <future>
 #include <string>
 #include <list>
+#include <queue>
 #include <vector>
 
 ///-----------------------------------------------------------------
@@ -41,8 +42,21 @@ private:
 	payload_type payload;
 };
 
-struct outgoing_packet
+class outgoing_packet
 {
+public:
+	outgoing_packet() {};
+	outgoing_packet(outgoing_packet&& other)
+	: promise( std::move(other.promise) )
+	, payload( std::move(other.payload) )
+	{}
+	outgoing_packet& operator=(outgoing_packet&& other)
+	{
+		promise = std::move(other.promise);
+		payload = std::move(other.payload);
+		return *this;
+	}
+	
 	std::promise<bool> promise;
 	payload_type payload;
 };
@@ -53,15 +67,34 @@ public:
 	// Initialization and preparation:
 	Connection() {}
 	
+	bool isOpen() const { return state == State::open; }
+	bool isClosed() const { return state == State::closed; }
+	void open() { if (!isClosed()) state = State::open; }
+	void close() { state = State::closed; }
+	
+	//-------------------------------------------------------------
 	// imcomming
 	bool has_incoming_data() const;
 	data_packet&& incoming();
 	std::promise<payload_type>& get_promise(const packet_id) const;
 	
 	// outgoing
-	bool has_outgoing_data() const;
-	outgoing_packet&& top_of_outgoing_queue();
-	void send(payload_type);
+	bool has_outgoing_data() const { return !outgoing_queue.empty(); }
+	outgoing_packet&& top_of_outgoing_queue()
+	{
+		outgoing_packet top_packet = std::move(outgoing_queue.front());
+		outgoing_queue.pop();
+		return std::move( top_packet );
+	}
+	void send(payload_type data) { std::printf("   >>> Send data < %s >", data.c_str()); }
+	
+	//-------------------------------------------------------------
+	// for client
+	void post_packet(outgoing_packet&& packet) { outgoing_queue.push( std::move(packet) ); }
+	
+private:
+	std::queue<outgoing_packet> outgoing_queue;
+	enum class State { ready, open, closed } state = State::ready;
 };
 
 ///-----------------------------------------------------------------
@@ -84,13 +117,13 @@ void process_connections(connection_set& connections)
 //				std::promise<payload_type>& p = connection->get_promise(data.id);
 //				p.set_value(data.payload);
 			}
-//			/// 5. Sending any queued outgong data
-//			if (connection->has_outgoing_data())
-//			{
-//				outgoing_packet data = connection->top_of_outgoing_queue();
-//				connection->send(data.payload);
-//				data.promise.set_value(true);
-//			}
+			/// 5. Sending any queued outgong data
+			if (connection->has_outgoing_data())
+			{
+				outgoing_packet data = connection->top_of_outgoing_queue();
+				connection->send(data.payload);
+				data.promise.set_value(true);
+			}
 		}
 	}
 }
@@ -118,6 +151,25 @@ void process_connections(connection_set& connections)
 			connect = &connections.emplace_back();
 			std::printf("   >>> Thread[ %.3d ] - has opened connection\n", clientID);
 		}
+		
+		// prepare data for posting
+		std::string data;
+		data.append("POST DATA : Client ");
+		data.append( std::to_string(clientID) );
+		
+		// Prepare some data packets ...
+		outgoing_packet packet;
+		packet.payload = data;
+		std::future<bool> posted = packet.promise.get_future();
+		
+		// Post
+		connect->post_packet( std::move(packet) );
+		
+		// Wait for data has been posted
+		posted.wait();
+		
+		// close connection
+		connect->close();
 	};
 
 	
@@ -126,8 +178,76 @@ void process_connections(connection_set& connections)
 	for (int i=0; i<10; ++i)
 		clients.emplace_back(fnClientProcessor, i*10);
 	
+	// prcess connections:
+	std::thread  connections_processor(	process_connections, std::ref(connections) );
+	
 	// wait for client to finish work...
 	std::for_each(clients.begin(), clients.end(), std::mem_fn(&std::thread::join));
+	
+	connections_processor.join();
+}
+
+// MARK: - Helper tests
+
+- (void)testConnectionOpenClose
+{
+	Connection connection;
+	XCTAssertFalse(connection.isOpen());
+	XCTAssertFalse(connection.isClosed());
+	
+	connection.open();
+	XCTAssertTrue(connection.isOpen());
+	XCTAssertFalse(connection.isClosed());
+	
+	connection.close();
+	XCTAssertFalse(connection.isOpen());
+	XCTAssertTrue(connection.isClosed());
+
+	connection.open();
+	XCTAssertFalse(connection.isOpen());
+	XCTAssertTrue(connection.isClosed());
+}
+
+- (void)testDoneFn
+{
+	connection_set connections;
+	
+	// empty connections set is not a reason for done
+	XCTAssertFalse( done(connections) );
+	
+	// Add couple connetions to process set
+	connections.emplace_back();
+	connections.emplace_back();
+	connections.emplace_back();
+	
+	// Still not done: each connection was not set to closed yet
+	XCTAssertFalse( done(connections) );
+	
+	// Open connetion
+	connections.front().open();
+	XCTAssertFalse( done(connections) );
+	
+	connections.back().open();
+	XCTAssertFalse( done(connections) );
+	
+	// Open all connections:
+	std::for_each(connections.begin(), connections.end(), std::mem_fn( &Connection::open ));
+	XCTAssertFalse( done(connections) );
+	
+	// Close connection
+	connections.front().close();
+	XCTAssertFalse( done(connections) );
+	
+	connections.back().close();
+	XCTAssertFalse( done(connections) );
+	
+	// Close all connections:
+	std::for_each(connections.begin(), connections.end(), std::mem_fn( &Connection::close ));
+	XCTAssertTrue( done(connections) ); // DONE! All connections were closed.
+	
+	// Still done even if one wre tried to open:
+	connections.front().open();
+	XCTAssertTrue( done(connections) );
 }
 
 @end
@@ -136,6 +256,10 @@ void process_connections(connection_set& connections)
 
 bool done(connection_set const& connections)
 {
-	// If there is no any connections - done.
-	return connections.empty();
+	bool _done = false;
+
+	if (!connections.empty())
+		_done = std::all_of(connections.begin(), connections.end(), std::mem_fn( &Connection::isClosed ));
+
+	return _done;
 }
