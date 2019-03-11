@@ -11,6 +11,7 @@
 #include <future>
 #include <string>
 #include <list>
+#include <vector>
 
 ///-----------------------------------------------------------------
 /// API declaration
@@ -29,8 +30,13 @@ void process_connections(connection_set&);
 ///-----------------------------------------------------------------
 /// API definition
 
-struct data_packet
+class data_packet
 {
+	data_packet(packet_id _id, payload_type&& data)
+		: id(_id)
+		, payload(data)
+	{}
+private:
 	packet_id id;
 	payload_type payload;
 };
@@ -44,10 +50,14 @@ struct outgoing_packet
 class  Connection
 {
 public:
+	// Initialization and preparation:
+	Connection() {}
+	
 	// imcomming
 	bool has_incoming_data() const;
 	data_packet&& incoming();
 	std::promise<payload_type>& get_promise(const packet_id) const;
+	
 	// outgoing
 	bool has_outgoing_data() const;
 	outgoing_packet&& top_of_outgoing_queue();
@@ -68,19 +78,19 @@ void process_connections(connection_set& connections)
 							   ++connection	)
 		{
 			/// 3. Retriving incomming data if there is any
-			if (connection->has_incoming_data())
+//			if (connection->has_incoming_data())
 			{
-				data_packet data = connection->incoming();
-				std::promise<payload_type>& p = connection->get_promise(data.id);
-				p.set_value(data.payload);
+//				data_packet data = connection->incoming();
+//				std::promise<payload_type>& p = connection->get_promise(data.id);
+//				p.set_value(data.payload);
 			}
-			/// 5. Sending any queued outgong data
-			if (connection->has_outgoing_data())
-			{
-				outgoing_packet data = connection->top_of_outgoing_queue();
-				connection->send(data.payload);
-				data.promise.set_value(true);
-			}
+//			/// 5. Sending any queued outgong data
+//			if (connection->has_outgoing_data())
+//			{
+//				outgoing_packet data = connection->top_of_outgoing_queue();
+//				connection->send(data.payload);
+//				data.promise.set_value(true);
+//			}
 		}
 	}
 }
@@ -92,20 +102,40 @@ void process_connections(connection_set& connections)
 
 @implementation c04_2_3MakingPromisesTests
 
-- (void)setUp {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
-
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-}
-
 // MARK: -
 
-- (void)testExample
+- (void)testConnectionHandling
 {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+	std::mutex cm;
+	connection_set connections;
+	
+	auto fnClientProcessor = [&cm, &connections](int clientID)
+	{
+		// Emplace connecting to server into process set:
+		Connection* connect = nullptr;
+		{
+			std::lock_guard<std::mutex> lock(cm);
+			connect = &connections.emplace_back();
+			std::printf("   >>> Thread[ %.3d ] - has opened connection\n", clientID);
+		}
+	};
+
+	
+	// Launch several clients:
+	std::vector< std::thread > clients;
+	for (int i=0; i<10; ++i)
+		clients.emplace_back(fnClientProcessor, i*10);
+	
+	// wait for client to finish work...
+	std::for_each(clients.begin(), clients.end(), std::mem_fn(&std::thread::join));
 }
 
 @end
+
+// MARK: - Implementation
+
+bool done(connection_set const& connections)
+{
+	// If there is no any connections - done.
+	return connections.empty();
+}
