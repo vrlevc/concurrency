@@ -79,20 +79,17 @@ public:
 	std::promise<payload_type>& get_promise(const packet_id) const;
 	
 	// outgoing
-	bool has_outgoing_data() const { return !outgoing_queue.empty(); }
-	outgoing_packet&& top_of_outgoing_queue()
-	{
-		outgoing_packet top_packet = std::move(outgoing_queue.front());
-		outgoing_queue.pop();
-		return std::move( top_packet );
-	}
-	void send(payload_type data) { std::printf("   >>> Send data < %s >", data.c_str()); }
+	bool has_outgoing_data() const { return isOpen() && !outgoing_queue.empty(); };
+	outgoing_packet& top_of_outgoing_queue() { return outgoing_queue.front(); }
+	void send(payload_type data) { std::printf("   >>> Send data < %s >\n", data.c_str()); }
+	void pop_outgoing_queue() { std::lock_guard<std::mutex> lk(outq_m); outgoing_queue.pop(); }
 	
 	//-------------------------------------------------------------
 	// for client
-	void post_packet(outgoing_packet&& packet) { outgoing_queue.push( std::move(packet) ); }
+	void post_packet(outgoing_packet&& packet) { std::lock_guard<std::mutex> lk(outq_m); outgoing_queue.push( std::move(packet) ); }
 	
 private:
+	std::mutex outq_m;
 	std::queue<outgoing_packet> outgoing_queue;
 	enum class State { ready, open, closed } state = State::ready;
 };
@@ -120,9 +117,10 @@ void process_connections(connection_set& connections)
 			/// 5. Sending any queued outgong data
 			if (connection->has_outgoing_data())
 			{
-				outgoing_packet data = connection->top_of_outgoing_queue();
+				outgoing_packet& data = connection->top_of_outgoing_queue();
 				connection->send(data.payload);
 				data.promise.set_value(true);
+				connection->pop_outgoing_queue();
 			}
 		}
 	}
@@ -152,21 +150,30 @@ void process_connections(connection_set& connections)
 			std::printf("   >>> Thread[ %.3d ] - has opened connection\n", clientID);
 		}
 		
-		// prepare data for posting
-		std::string data;
-		data.append("POST DATA : Client ");
-		data.append( std::to_string(clientID) );
+		// Open connection
+		connect->open();
 		
-		// Prepare some data packets ...
-		outgoing_packet packet;
-		packet.payload = data;
-		std::future<bool> posted = packet.promise.get_future();
-		
-		// Post
-		connect->post_packet( std::move(packet) );
+		std::vector<std::future<bool>> posted_set;
+		for (int i=0; i<5; ++i) // post 100 packets ...
+		{
+			// prepare data for posting
+			std::string data;
+			data.append("POST DATA : Client ");
+			data.append( std::to_string(clientID) );
+			data.append(" : Packet ");
+			data.append( std::to_string(i) );
+			
+			// Prepare some data packets ...
+			outgoing_packet packet;
+			packet.payload = data;
+			posted_set.emplace_back( packet.promise.get_future() );
+			
+			// Post
+			connect->post_packet( std::move(packet) );
+		}
 		
 		// Wait for data has been posted
-		posted.wait();
+		std::for_each(posted_set.begin(), posted_set.end(), std::mem_fn( &std::future<bool>::wait ));
 		
 		// close connection
 		connect->close();
@@ -175,7 +182,7 @@ void process_connections(connection_set& connections)
 	
 	// Launch several clients:
 	std::vector< std::thread > clients;
-	for (int i=0; i<10; ++i)
+	for (int i=0; i<5; ++i)
 		clients.emplace_back(fnClientProcessor, i*10);
 	
 	// prcess connections:
@@ -248,6 +255,83 @@ void process_connections(connection_set& connections)
 	// Still done even if one wre tried to open:
 	connections.front().open();
 	XCTAssertTrue( done(connections) );
+}
+
+-(void)testConnection_has_outgoing_data
+{
+	Connection connection;
+	
+	XCTAssertFalse(connection.has_outgoing_data());
+	connection.open();
+	XCTAssertFalse(connection.has_outgoing_data());
+	connection.close();
+	XCTAssertFalse(connection.has_outgoing_data());
+}
+
+-(void)testConnection_post_packet
+{
+	Connection connection;
+	
+	XCTAssertFalse(connection.has_outgoing_data());
+	
+	outgoing_packet packetA;
+	connection.post_packet( std::move(packetA) );
+	XCTAssertFalse(connection.has_outgoing_data());
+	connection.open();
+	XCTAssertTrue(connection.has_outgoing_data());
+	connection.close();
+	XCTAssertFalse(connection.has_outgoing_data());
+}
+
+-(void)testConnection_send
+{
+	Connection connection;
+	
+	payload_type data = "test data to send";
+	connection.send(data);
+}
+
+-(void)testConnection_top_of_outgoing_queue
+{
+	Connection connection;
+	
+	connection.open();
+	outgoing_packet packetA;
+	packetA.payload = "AAA";
+	connection.post_packet( std::move(packetA) );
+	outgoing_packet packetB;
+	packetB.payload = "BBB";
+	connection.post_packet( std::move(packetA) );
+	
+	outgoing_packet& top_packet = connection.top_of_outgoing_queue();
+	XCTAssertTrue( top_packet.payload == "AAA" );
+}
+
+-(void)testConnection_pop_outgoing_queue
+{
+	Connection connection;
+	
+	connection.open();
+	outgoing_packet packetA, packetB, packetC;
+	packetA.payload = "AAA";
+	packetB.payload = "BBB";
+	packetC.payload = "CCC";
+	
+	XCTAssertFalse(connection.has_outgoing_data());
+	connection.post_packet( std::move(packetA) );
+	connection.post_packet( std::move(packetB) );
+	connection.post_packet( std::move(packetC) );
+	XCTAssertTrue(connection.has_outgoing_data());
+	
+	XCTAssertTrue( connection.top_of_outgoing_queue().payload == "AAA" );
+	connection.pop_outgoing_queue();
+	XCTAssertTrue(connection.has_outgoing_data());
+	XCTAssertTrue( connection.top_of_outgoing_queue().payload == "BBB" );
+	connection.pop_outgoing_queue();
+	XCTAssertTrue(connection.has_outgoing_data());
+	XCTAssertTrue( connection.top_of_outgoing_queue().payload == "CCC" );
+	connection.pop_outgoing_queue();
+	XCTAssertFalse(connection.has_outgoing_data());
 }
 
 @end
