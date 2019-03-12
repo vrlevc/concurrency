@@ -173,7 +173,7 @@ void process_connections(connection_set& connections)
 		}
 		
 		// Wait for data has been posted
-		std::for_each(posted_set.begin(), posted_set.end(), std::mem_fn( &std::future<bool>::wait ));
+		std::for_each(posted_set.begin(), posted_set.end(), std::mem_fn( &std::future<bool>::get ));
 		
 		// close connection
 		connect->close();
