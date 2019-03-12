@@ -32,7 +32,11 @@ static double square_root(double x)
 
 - (void)test_exception_async
 {
-	std::future<double> f = std::async(square_root, -1);
+	bool thrown_and_catched = false;
+	const double x = -1;
+	XCTAssertTrue(x < 0.0);
+	
+	std::future<double> f = std::async(square_root, x);
 	
 	// catch exception thrown in other thread if any (YES in our case):
 	std::exception_ptr exp; // is going to be NOT nullptr
@@ -54,16 +58,23 @@ static double square_root(double x)
 		}
 		catch(const std::exception& e)
 		{
+			thrown_and_catched = true;
 			std::printf("   >>> Exception from other thread is : %s\n", e.what());
 		}
 	}
+	
+	XCTAssertTrue(thrown_and_catched);
 }
 
 -(void)test_exception_task
 {
+	bool thrown_and_catched = false;
+	const double x = -1;
+	XCTAssertTrue(x < 0.0);
+	
 	std::packaged_task<double(double)> sqrt_task(square_root);
 	std::future<double> sqrt_res = sqrt_task.get_future();
-	std::thread task_processor(std::move(sqrt_task), -1);  // throws exception and packs it into future
+	std::thread task_processor(std::move(sqrt_task), x);  // throws exception and packs it into future
 	task_processor.join();
 	
 	std::exception_ptr exp;
@@ -74,12 +85,19 @@ static double square_root(double x)
 	}
 	catch(const std::exception& e)
 	{
+		thrown_and_catched = true;
 		std::printf("   >>> Exception from other thread is : %s\n", e.what());
 	}
+	
+	XCTAssertTrue(thrown_and_catched);
 }
 
 -(void)test_exeption_promise
 {
+	bool thrown_and_catched = false;
+	const double x = -1;
+	XCTAssertTrue(x < 0.0);
+	
 	std::promise<double> sqrt_promice;
 	std::future<double> sqrt_res = sqrt_promice.get_future();
 	
@@ -94,7 +112,7 @@ static double square_root(double x)
 			sqrt_promice.set_exception( std::current_exception() );
 		}
 	};
-	std::thread processor( fn_set_promice_explicit, -1 );
+	std::thread processor( fn_set_promice_explicit, x );
 	processor.join();
 	
 	std::exception_ptr exp;
@@ -105,8 +123,11 @@ static double square_root(double x)
 	}
 	catch(const std::exception& e)
 	{
+		thrown_and_catched = true;
 		std::printf("   >>> Exception from other thread is : %s\n", e.what());
 	}
+	
+	XCTAssertTrue(thrown_and_catched);
 }
 
 // MARK: -
