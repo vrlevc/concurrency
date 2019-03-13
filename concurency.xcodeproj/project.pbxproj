@@ -30,6 +30,7 @@
 		54AA4F3F21EDBF61009590B6 /* c04_2_2PackagedTaskTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 54AA4F3E21EDBF61009590B6 /* c04_2_2PackagedTaskTests.mm */; };
 		54B1B5E521CB80CE00C6799B /* c04_1_ConditionVariablesTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 54B1B5E421CB80CE00C6799B /* c04_1_ConditionVariablesTests.mm */; };
 		54EC67C921B67CB600784186 /* c03_2_3ThreadSafeIterfaceTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 54EC67C821B67CB600784186 /* c03_2_3ThreadSafeIterfaceTests.mm */; };
+		A95BD97F2238E5B3007F1A46 /* c04_2_5WaitMultipleThreadsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = A95BD97E2238E5B3007F1A46 /* c04_2_5WaitMultipleThreadsTests.mm */; };
 		A964955621A97BA9009E910A /* c02_2ArgumentsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = A964955521A97BA9009E910A /* c02_2ArgumentsTests.mm */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		54EC67C821B67CB600784186 /* c03_2_3ThreadSafeIterfaceTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = c03_2_3ThreadSafeIterfaceTests.mm; sourceTree = "<group>"; };
 		A952E21C21D1101A00DD8499 /* threadsafe_queue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = threadsafe_queue.hpp; sourceTree = "<group>"; };
 		A954537C21AAA46A001A0514 /* thread_guard.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = thread_guard.hpp; sourceTree = "<group>"; };
+		A95BD97E2238E5B3007F1A46 /* c04_2_5WaitMultipleThreadsTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = c04_2_5WaitMultipleThreadsTests.mm; sourceTree = "<group>"; };
 		A960ED0421AF22C400E4E83E /* scoped_thread.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = scoped_thread.hpp; sourceTree = "<group>"; };
 		A960ED0521AF235600E4E83E /* parallel_accumulate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = parallel_accumulate.hpp; sourceTree = "<group>"; };
 		A964955521A97BA9009E910A /* c02_2ArgumentsTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = c02_2ArgumentsTests.mm; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				54AA4F3E21EDBF61009590B6 /* c04_2_2PackagedTaskTests.mm */,
 				5482B1BB21FF69A700EB495E /* c04_2_3MakingPromisesTests.mm */,
 				544750AB22379DEF00995302 /* c04_2_4SavingExceptionFutureTests.mm */,
+				A95BD97E2238E5B3007F1A46 /* c04_2_5WaitMultipleThreadsTests.mm */,
 			);
 			name = "c04 Synchronizing concurrent operations";
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 			files = (
 				5476063321A6FD5100F07DC1 /* c02_3OwnershipTests.mm in Sources */,
 				5482B1BC21FF69A700EB495E /* c04_2_3MakingPromisesTests.mm in Sources */,
+				A95BD97F2238E5B3007F1A46 /* c04_2_5WaitMultipleThreadsTests.mm in Sources */,
 				5496C3E321C3DC9400E2FEB5 /* c03_3_AlternativeLocksTests.mm in Sources */,
 				5429918121BE3D92003008A2 /* thread_guard.cpp in Sources */,
 				54645E5F21EC75F500DD22BF /* c04_2_1FutureBasicTests.mm in Sources */,
@@ -428,24 +432,29 @@
 		5476062A21A6FAA900F07DC1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8M8T7QQG92;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		5476062B21A6FAA900F07DC1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8M8T7QQG92;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
 		5476063521A6FD5100F07DC1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8M8T7QQG92;
@@ -457,12 +466,14 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = lva.com.concurencyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		5476063621A6FD5100F07DC1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8M8T7QQG92;
@@ -474,6 +485,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = lva.com.concurencyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
